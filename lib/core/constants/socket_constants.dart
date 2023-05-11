@@ -1,3 +1,1 @@
-class SocketConstants {
-  
-}
+class SocketConstants {}
