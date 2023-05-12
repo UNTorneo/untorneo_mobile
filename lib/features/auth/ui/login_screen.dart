@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:untorneo_mobile/core/constants/lotti_assets.dart';
 import 'package:untorneo_mobile/core/validators/text_form_validator.dart';
+import 'package:untorneo_mobile/features/auth/state/auth_provider.dart';
 import 'package:untorneo_mobile/widgets/widgets/custom_text_field.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -92,7 +93,7 @@ class _AuthScreenState extends ConsumerState<LoginScreen> {
   }
 
   void _onLogin() {
-    if (_formKey.currentState!.validate()) {}
+    if (!_formKey.currentState!.validate()) return;
   }
 
   void _onRegister() {}
