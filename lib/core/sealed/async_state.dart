@@ -20,16 +20,16 @@ class AsyncLoading<T> implements AsyncState<T> {
 }
 
 class AsyncSuccess<T> implements AsyncState<T> {
-  final T data;
   AsyncSuccess(this.data);
+  final T data;
 
   @override
   String toString() => 'AsyncSuccess<$T>($data)';
 }
 
 class AsyncError<T> implements AsyncState<T> {
-  final Failure error;
   AsyncError(this.error);
+  final Failure error;
 
   @override
   String toString() => 'AsyncError<$T>($error)';

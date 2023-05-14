@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:untorneo_mobile/core/constants/lotti_assets.dart';
 import 'package:untorneo_mobile/core/validators/text_form_validator.dart';
-import 'package:untorneo_mobile/features/auth/state/auth_provider.dart';
+import 'package:untorneo_mobile/features/home/ui/home_index_screen.dart';
 import 'package:untorneo_mobile/widgets/widgets/custom_text_field.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -93,6 +94,7 @@ class _AuthScreenState extends ConsumerState<LoginScreen> {
   }
 
   void _onLogin() {
+    GoRouter.of(context).go(IndexHomeScreen.route);
     if (!_formKey.currentState!.validate()) return;
   }
 

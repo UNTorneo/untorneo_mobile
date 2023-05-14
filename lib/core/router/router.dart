@@ -3,12 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:untorneo_mobile/features/auth/ui/login_screen.dart';
 import 'package:untorneo_mobile/features/error/error_screen.dart';
+import 'package:untorneo_mobile/features/home/ui/home_index_screen.dart';
 
-final routerProvider = Provider<CustomRouter>((ref) {
-  return CustomRouter();
-});
+final routerProvider = Provider<CustomRouter>((ref) => CustomRouter());
 
-class CustomRouter {
+final class CustomRouter {
   CustomRouter();
 
   static String atributeErrorMessage(String atribute) {
@@ -16,6 +15,8 @@ class CustomRouter {
   }
 
   static final globalKey = GlobalKey<NavigatorState>();
+  BuildContext get context => globalKey.currentState!.context;
+  GoRouter get router => goRouter;
 
   final goRouter = GoRouter(
     initialLocation: LoginScreen.route,
@@ -27,6 +28,7 @@ class CustomRouter {
       return ErrorScreen(error: state.error.toString());
     },
     routes: [
+      ...tournamentRoutes,
       GoRoute(
         path: ErrorScreen.route,
         builder: (context, state) {
@@ -44,12 +46,12 @@ class CustomRouter {
         path: LoginScreen.route,
         builder: (context, state) => const LoginScreen(),
       ),
+      GoRoute(
+        path: IndexHomeScreen.route,
+        builder: (context, state) => const IndexHomeScreen(),
+      ),
     ],
   );
 
-  
-
-  BuildContext get context => globalKey.currentState!.context;
-
-  GoRouter get router => goRouter;
+  static final tournamentRoutes = <RouteBase>[];
 }
