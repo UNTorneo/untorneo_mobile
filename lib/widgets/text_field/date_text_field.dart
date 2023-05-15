@@ -19,7 +19,7 @@ class DateTextField extends StatelessWidget {
         final res = await showDatePicker(
           context: context,
           initialDate: DateTime.now(),
-          firstDate: DateTime(2022, 12),
+          firstDate: DateTime(1922, 12),
           lastDate: DateTime.now(),
         );
         if (res == null) return;

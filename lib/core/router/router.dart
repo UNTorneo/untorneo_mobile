@@ -5,6 +5,9 @@ import 'package:go_router/go_router.dart';
 import 'package:untorneo_mobile/core/sealed/async_state.dart';
 import 'package:untorneo_mobile/features/auth/state/auth_provider.dart';
 import 'package:untorneo_mobile/features/auth/ui/login_screen.dart';
+import 'package:untorneo_mobile/features/auth/ui/my_profile_screen.dart';
+import 'package:untorneo_mobile/features/auth/ui/profile_screen.dart';
+import 'package:untorneo_mobile/features/auth/ui/sign_up_screen.dart';
 import 'package:untorneo_mobile/features/error/error_screen.dart';
 import 'package:untorneo_mobile/features/home/ui/home_index_screen.dart';
 import 'package:untorneo_mobile/features/tournaments/ui/tournament_detail_screen.dart';
@@ -36,6 +39,8 @@ class CustomRouter extends Notifier<void> implements Listenable {
 
   get routes => [
         ...tournamentRoutes,
+        ...authRoutes,
+        ...userRoutes,
         GoRoute(
           path: ErrorScreen.route,
           builder: (context, state) {
@@ -70,6 +75,24 @@ class CustomRouter extends Notifier<void> implements Listenable {
         return TournamentDetailScreen(tournamentId: id);
       },
     ),
+  ];
+
+  static final authRoutes = <RouteBase>[
+    GoRoute(
+        path: SignUpScreen.route,
+        builder: (context, state) => const SignUpScreen(),
+      ),
+  ];
+
+  static final userRoutes = <RouteBase>[
+      GoRoute(
+        path: ProfileScreen.route,
+        builder: (context, state) => const ProfileScreen(),
+      ),
+      GoRoute(
+        path: MyProfileScreen.route,
+        builder: (context, state) => const MyProfileScreen(),
+      ),
   ];
 
   static String atributeErrorMessage(String atribute) {

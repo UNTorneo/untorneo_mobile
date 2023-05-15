@@ -8,9 +8,9 @@ class TextFormValidator {
     return null;
   }
 
-  static String? nameValidator(String? value) {
+  static String? textValidator(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Por favor, ingresa tu nombre';
+      return 'Por favor, ingrese un texto';
     }
     return null;
   }
