@@ -44,8 +44,8 @@ class _IndexHomeScreenState extends ConsumerState<IndexHomeScreen> {
             label: 'Torneos',
           ),
           NavigationDestination(
-            icon: Icon(Icons.explore_outlined),
-            label: 'Explorar',
+            icon: Icon(Icons.sports_football_outlined),
+            label: 'Partidos',
           ),
           NavigationDestination(
             icon: Icon(Icons.group_outlined),
