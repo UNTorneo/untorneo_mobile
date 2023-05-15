@@ -27,4 +27,16 @@ class TournamentNotifier extends StateNotifier<TournamentState> {
       (r) => state = state.copyWith(tournaments: AsyncState.success(r)),
     );
   }
+
+  Future<void> getTournamentPopulated(String id) async {
+    state =
+        state.copyWith(tournamentVenuePopulated: const AsyncState.loading());
+    final res = await tournamentRepository.getTournamentVenuePopulated(id);
+    res.fold(
+      (l) =>
+          state = state.copyWith(tournamentVenuePopulated: AsyncState.error(l)),
+      (r) => state =
+          state.copyWith(tournamentVenuePopulated: AsyncState.success(r)),
+    );
+  }
 }

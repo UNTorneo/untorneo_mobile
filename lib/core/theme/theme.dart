@@ -19,6 +19,7 @@ class CustomTheme extends StateNotifier<ThemeData> {
             appBarTheme: const AppBarTheme(
               systemOverlayStyle: SystemUiOverlayStyle.dark,
               iconTheme: IconThemeData(color: Colors.black),
+              centerTitle: true,
               titleTextStyle: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,

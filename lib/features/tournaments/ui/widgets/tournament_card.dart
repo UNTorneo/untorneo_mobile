@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:untorneo_mobile/core/theme/theme.dart';
 import 'package:untorneo_mobile/features/tournaments/models/tournament_model.dart';
+import 'package:untorneo_mobile/features/tournaments/ui/tournament_detail_screen.dart';
 
 class TournamentCard extends ConsumerWidget {
   const TournamentCard({super.key, required this.tournament});
@@ -47,7 +49,9 @@ class TournamentCard extends ConsumerWidget {
           ),
           const SizedBox(height: 10),
           FilledButton(
-            onPressed: () {},
+            onPressed: () => GoRouter.of(context).push(
+              '${TournamentDetailScreen.route}/${tournament.id}',
+            ),
             child: const Text('Ir al torneo'),
           ),
         ],

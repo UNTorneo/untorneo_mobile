@@ -11,8 +11,11 @@ class ScreenLoadingWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Lottie.asset(LottieAssets.loading, width: 200, height: 200),
-        const SizedBox(width: double.infinity),
-        const Text('Cargando...', style: TextStyle(fontWeight: FontWeight.w500)),
+        const SizedBox(width: double.infinity, height: 20),
+        const Text(
+          'Cargando...',
+          style: TextStyle(fontWeight: FontWeight.w500),
+        ),
       ],
     );
   }

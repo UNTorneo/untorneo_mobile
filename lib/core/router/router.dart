@@ -7,6 +7,7 @@ import 'package:untorneo_mobile/features/auth/state/auth_provider.dart';
 import 'package:untorneo_mobile/features/auth/ui/login_screen.dart';
 import 'package:untorneo_mobile/features/error/error_screen.dart';
 import 'package:untorneo_mobile/features/home/ui/home_index_screen.dart';
+import 'package:untorneo_mobile/features/tournaments/ui/tournament_detail_screen.dart';
 
 final globalKey = GlobalKey<NavigatorState>();
 
@@ -58,7 +59,18 @@ class CustomRouter extends Notifier<void> implements Listenable {
         ),
       ];
 
-  static final tournamentRoutes = <RouteBase>[];
+  static final tournamentRoutes = <RouteBase>[
+    GoRoute(
+      path: TournamentDetailScreen.routeParams,
+      builder: (context, state) {
+        final id = state.pathParameters['id'];
+        if (id == null) {
+          return ErrorScreen(error: atributeErrorMessage('id'));
+        }
+        return TournamentDetailScreen(tournamentId: id);
+      },
+    ),
+  ];
 
   static String atributeErrorMessage(String atribute) {
     return 'Es necesario el parametro $atribute';
