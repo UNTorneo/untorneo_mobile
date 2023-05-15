@@ -1,10 +1,10 @@
 // ignore_for_file: avoid_print
 
-import 'dart:developer' as dev;
+//import 'dart:developer' as dev;
 
 class Logger {
   static void log(String message) {
-    dev.log(message);
+    print(message);
   }
 
   static void logError(String message, StackTrace stackTrace) {

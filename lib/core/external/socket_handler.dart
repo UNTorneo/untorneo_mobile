@@ -1,8 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
-import 'package:untorneo_mobile/core/constants/api_constants.dart';
 import 'package:untorneo_mobile/core/logger/logger.dart';
 
 typedef EventHandler<T> = dynamic Function(T data);
@@ -31,7 +29,7 @@ class SocketIOHandlerImpl implements SocketIOHandler {
   @override
   Future<void> connect() async {
     socket = io.io(
-      ApiConstants.socketUrl,
+      'ApiConstants.socketUrl',
       io.OptionBuilder().setTransports(['websocket']).build(),
     );
   }

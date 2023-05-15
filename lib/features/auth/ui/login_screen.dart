@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:untorneo_mobile/core/constants/lotti_assets.dart';
+import 'package:untorneo_mobile/core/sealed/async_state.dart';
 import 'package:untorneo_mobile/core/validators/text_form_validator.dart';
-import 'package:untorneo_mobile/features/home/ui/home_index_screen.dart';
+import 'package:untorneo_mobile/features/auth/models/login_model.dart';
+import 'package:untorneo_mobile/features/auth/state/auth_provider.dart';
+import 'package:untorneo_mobile/widgets/loading/loading_widget.dart';
 import 'package:untorneo_mobile/widgets/widgets/custom_text_field.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -17,12 +19,13 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _AuthScreenState extends ConsumerState<LoginScreen> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _emailController = TextEditingController(text: 'negarzonc@unal.edu.co');
+  final _passwordController = TextEditingController(text: '12345');
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authProvider);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -73,10 +76,15 @@ class _AuthScreenState extends ConsumerState<LoginScreen> {
                 const SizedBox(height: 20),
                 SizedBox(
                   width: double.infinity,
-                  child: FilledButton(
-                    onPressed: _onLogin,
-                    child: const Text('Iniciar sesión'),
-                  ),
+                  child: authState.authModel.isLoading
+                      ? const FilledButton(
+                          onPressed: null,
+                          child: LoadingWidget(),
+                        )
+                      : FilledButton(
+                          onPressed: _onLogin,
+                          child: const Text('Iniciar sesión'),
+                        ),
                 ),
                 SizedBox(
                   width: double.infinity,
@@ -94,8 +102,9 @@ class _AuthScreenState extends ConsumerState<LoginScreen> {
   }
 
   void _onLogin() {
-    GoRouter.of(context).go(IndexHomeScreen.route);
     if (!_formKey.currentState!.validate()) return;
+    final user = LoginModel(_emailController.text, _passwordController.text);
+    ref.read(authProvider.notifier).login(user);
   }
 
   void _onRegister() {}

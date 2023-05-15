@@ -3,24 +3,26 @@ import 'package:untorneo_mobile/core/failure/failure.dart';
 import 'package:untorneo_mobile/widgets/loading/loading_widget.dart';
 
 sealed class AsyncState<T> {
-  factory AsyncState.loading() = AsyncLoading<T>;
-  factory AsyncState.initial() = AsyncInitial<T>;
-  factory AsyncState.success(T data) = AsyncSuccess<T>;
-  factory AsyncState.error(Failure error) = AsyncError<T>;
+  const factory AsyncState.loading() = AsyncLoading<T>;
+  const factory AsyncState.initial() = AsyncInitial<T>;
+  const factory AsyncState.success(T data) = AsyncSuccess<T>;
+  const factory AsyncState.error(Failure error) = AsyncError<T>;
 }
 
 class AsyncInitial<T> implements AsyncState<T> {
+  const AsyncInitial();
   @override
   String toString() => 'AsyncInitial<${T.runtimeType}>';
 }
 
 class AsyncLoading<T> implements AsyncState<T> {
+  const AsyncLoading();
   @override
   String toString() => 'AsyncLoading<${T.runtimeType}>';
 }
 
 class AsyncSuccess<T> implements AsyncState<T> {
-  AsyncSuccess(this.data);
+  const AsyncSuccess(this.data);
   final T data;
 
   @override
@@ -28,7 +30,7 @@ class AsyncSuccess<T> implements AsyncState<T> {
 }
 
 class AsyncError<T> implements AsyncState<T> {
-  AsyncError(this.error);
+  const AsyncError(this.error);
   final Failure error;
 
   @override
@@ -39,6 +41,11 @@ extension AsyncExtension<T> on AsyncState<T> {
   T? get data => (this is AsyncSuccess) ? (this as AsyncSuccess).data : null;
   Failure? get error =>
       (this is AsyncError) ? (this as AsyncError).error : null;
+
+  bool get isLoading => this is AsyncLoading;
+  bool get isInitial => this is AsyncInitial;
+  bool get isSuccess => this is AsyncSuccess;
+  bool get isError => this is AsyncError;
 
   W on<W>({
     required W Function(T) onData,

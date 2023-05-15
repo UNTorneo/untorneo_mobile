@@ -1,4 +1,3 @@
 class ApiConstants {
-  static const baseUrl = '${socketUrl}api';
-  static const socketUrl = 'https://oyt-backend.herokuapp.com/';
+  static const baseUrl = 'https://api-gateway-apollo-4yiv26znhq-uc.a.run.app';
 }

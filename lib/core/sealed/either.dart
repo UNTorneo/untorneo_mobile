@@ -20,20 +20,22 @@ class Right<L, R> implements Either<L, R> {
 }
 
 extension EitherExtension<L, R> on Either<L, R> {
-  L? get left => (this is Left) ? (this as Left).left : null;
-  R? get right => (this is Right) ? (this as Right).right : null;
+  L? get left => (this is Left<L, R>) ? (this as Left<L, R>).left : null;
+  R? get right => (this is Right<L, R>) ? (this as Right<L, R>).right : null;
 
-  W fold<W>({
-    required W Function(L) left,
-    required W Function(R) right,
-  }) {
-    switch (runtimeType) {
-      case Left:
-        return left((this as Left).left);
-      case Right:
-        return right((this as Right).right);
-      default:
-        throw Exception('Invalid state');
+  bool get isLeft => this is Left<L, R>;
+  bool get isRight => this is Right<L, R>;
+
+  W fold<W>(
+    W Function(L) left,
+    W Function(R) right,
+  ) {
+    if (this is Left<L, R>) {
+      return left((this as Left<L, R>).left);
+    } else if (this is Right<L, R>) {
+      return right((this as Right<L, R>).right);
+    } else {
+      throw Exception('Unhandled Either case');
     }
   }
 }
