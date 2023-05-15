@@ -47,6 +47,9 @@ class VenueDataSourceImpl implements VenueDataSource {
     try {
       final options = QueryOptions(
         document: gql(VenueQuerys.getVenue),
+        variables: {
+          'getVenueId':id
+        },
       );
       final res = await gqlHandler.query(options, 'getVenue');
       return Venue.fromMap(res);

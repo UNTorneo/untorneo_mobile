@@ -17,8 +17,8 @@ class ClanRepositoryImpl implements ClanRepository {
   ClanRepositoryImpl(this.ordersDataSource);
 
   factory ClanRepositoryImpl.fromRef(Ref ref) {
-    final venueDataSource = ref.read(clanDataSourceProvider);
-    return ClanRepositoryImpl(venueDataSource);
+    final clanDataSource = ref.read(clanDataSourceProvider);
+    return ClanRepositoryImpl(clanDataSource);
   }
 
   final ClanDataSource ordersDataSource;
