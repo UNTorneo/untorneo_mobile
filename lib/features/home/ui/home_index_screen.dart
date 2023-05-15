@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untorneo_mobile/core/constants/image_constants.dart';
+import 'package:untorneo_mobile/features/matches/ui/matches_home_screen.dart';
 import 'package:untorneo_mobile/features/tournaments/ui/tournaments_home_screen.dart';
 
 class IndexHomeScreen extends ConsumerStatefulWidget {
@@ -59,7 +60,7 @@ class _IndexHomeScreenState extends ConsumerState<IndexHomeScreen> {
       ),
       body: const [
         TournamentHome(),
-        Center(child: Text('Explorar')),
+        MatchesHomeScreen(),
         Center(child: Text('Clanes')),
         Center(child: Text('Mi perfil')),
       ][_currentIndex],

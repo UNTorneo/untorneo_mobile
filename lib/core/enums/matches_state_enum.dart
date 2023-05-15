@@ -1,7 +1,6 @@
-import 'package:collection/collection.dart';
 import 'package:untorneo_mobile/core/constants/lotti_assets.dart';
 
-enum CurrentTournamentState {
+enum CurrentMatcheState {
   confirmed(
     value: 'confirmed',
     translation: 'Confirmado',
@@ -17,20 +16,33 @@ enum CurrentTournamentState {
     translation: 'Cancelado',
     lottieAsset: LottieAssets.cancelled,
   ),
-  inProgress(
-    value: 'in-progress',
-    translation: 'En progreso',
+  postponed(
+    value: 'postponed',
+    translation: 'Pospuesto',
+    lottieAsset: LottieAssets.waiting,
+  ),
+  unknown(
+    value: 'unknown',
+    translation: 'Desconocido',
+    lottieAsset: LottieAssets.unknow,
+  ),
+  playing(
+    value: 'playing',
+    translation: 'Jugando',
     lottieAsset: LottieAssets.matchScore,
   );
 
-  const CurrentTournamentState({
+  const CurrentMatcheState({
     required this.value,
     required this.translation,
     required this.lottieAsset,
   });
 
-  static CurrentTournamentState? fromString(String value) {
-    return CurrentTournamentState.values.firstWhereOrNull((e) => e.value == value);
+  static CurrentMatcheState fromString(String value) {
+    return CurrentMatcheState.values.firstWhere(
+      (e) => e.value == value,
+      orElse: () => CurrentMatcheState.unknown,
+    );
   }
 
   final String value;

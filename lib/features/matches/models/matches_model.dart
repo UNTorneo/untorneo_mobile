@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:untorneo_mobile/core/enums/matches_state_enum.dart';
 
 final class MatchesModel extends Equatable {
   const MatchesModel(
@@ -30,6 +31,8 @@ final class MatchesModel extends Equatable {
       map['updatedAt'] as String,
     );
   }
+
+  CurrentMatcheState get state => CurrentMatcheState.fromString(status);
 
   final String id;
   final String tournamentId;
