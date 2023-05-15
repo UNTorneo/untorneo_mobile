@@ -47,4 +47,55 @@ final class GraphQLHandler {
       rethrow;
     }
   }
+
+  Future<Map<String, dynamic>> query(
+    QueryOptions options,
+    String operation,
+  ) async {
+    try {
+      Logger.log('GraphQL Query: ${options.document}');
+      final result = await client.query(options);
+      Logger.log('GraphQL Query Result: ${result.data}');
+      if (result.hasException) {
+        throw result.exception!;
+      }
+      if (result.data == null || result.data!.isEmpty) {
+        throw 'No data';
+      }
+      final data = result.data![operation];
+      if (data?[operation]?['error'] != null) {
+        throw data!['error'];
+      }
+      return data;
+    } catch (e, s) {
+      Logger.logError(e.toString(), s);
+      rethrow;
+    }
+  }
+
+  Future<List> queryList(
+    QueryOptions options,
+    String operation,
+  ) async {
+    try {
+      Logger.log('GraphQL Query: ${options.document}');
+      final result = await client.query(options);
+      Logger.log('GraphQL Query Result: ${result.data}');
+      if (result.hasException) {
+        throw result.exception!;
+      }
+      if (result.data == null || result.data!.isEmpty) {
+        throw 'No data';
+      }
+      final data = result.data![operation];
+      if (data is List) return data;
+      if (data?[operation]?['error'] != null) {
+        throw data!['error'];
+      }
+      return data;
+    } catch (e, s) {
+      Logger.logError(e.toString(), s);
+      rethrow;
+    }
+  }
 }

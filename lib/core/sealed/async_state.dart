@@ -44,7 +44,7 @@ extension AsyncExtension<T> on AsyncState<T> {
 
   bool get isLoading => this is AsyncLoading;
   bool get isInitial => this is AsyncInitial;
-  bool get isSuccess => this is AsyncSuccess;
+  bool get isSuccess => this is AsyncSuccess<T>;
   bool get isError => this is AsyncError;
 
   W on<W>({
@@ -88,10 +88,29 @@ extension AsyncExtension<T> on AsyncState<T> {
   }
 
   Widget when({
+    required Widget Function(T) onData,
+    required Widget Function(Failure) onError,
+    Widget Function()? onLoading,
+    Widget Function()? onInitial,
+  }) {
+    if (this is AsyncLoading) {
+      return onLoading?.call() ?? const LoadingWidget();
+    } else if (this is AsyncInitial) {
+      return onInitial?.call() ?? onLoading?.call() ?? const LoadingWidget();
+    } else if (this is AsyncSuccess<T>) {
+      return onData((this as AsyncSuccess).data);
+    } else if (this is AsyncError) {
+      return onError((this as AsyncError).error);
+    } else {
+      throw Exception('Invalid state');
+    }
+  }
+
+  Widget whenOrNull({
     required Widget Function(T?) onData,
     required Widget Function(Failure) onError,
-    required Widget Function()? onLoading,
-    required Widget Function()? onInitial,
+    Widget Function()? onLoading,
+    Widget Function()? onInitial,
   }) {
     switch (runtimeType) {
       case AsyncLoading:

@@ -17,7 +17,7 @@ abstract class AuthDatasource {
 }
 
 final class AuthDatasourceImpl implements AuthDatasource {
-  AuthDatasourceImpl(this.ref, this.gqlHandler, this.dbHandler);
+  const AuthDatasourceImpl(this.ref, this.gqlHandler, this.dbHandler);
 
   factory AuthDatasourceImpl.fromRef(Ref ref) {
     return AuthDatasourceImpl(
@@ -38,8 +38,8 @@ final class AuthDatasourceImpl implements AuthDatasource {
         document: gql(AuthMutations.login),
         variables: loginModel.toJson(),
       );
-      final result = await gqlHandler.mutate(options, 'login');
-      return AuthModel.fromJson(result);
+      final res = await gqlHandler.mutate(options, 'login');
+      return AuthModel.fromJson(res);
     } catch (e, s) {
       Logger.logError(e.toString(), s);
       rethrow;
