@@ -4,7 +4,7 @@ sealed class Either<L, R> {
 }
 
 class Left<L, R> implements Either<L, R> {
-  Left(this.left);
+  const Left(this.left);
   final L left;
 
   @override
@@ -12,7 +12,7 @@ class Left<L, R> implements Either<L, R> {
 }
 
 class Right<L, R> implements Either<L, R> {
-  Right(this.right);
+  const Right(this.right);
   final R right;
 
   @override

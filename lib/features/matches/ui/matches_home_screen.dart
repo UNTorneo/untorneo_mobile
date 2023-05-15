@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lottie/lottie.dart';
+import 'package:untorneo_mobile/core/constants/lotti_assets.dart';
 import 'package:untorneo_mobile/core/theme/theme.dart';
 
 class MatchesHomeScreen extends ConsumerWidget {
@@ -18,8 +20,19 @@ class MatchesHomeScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('matches.name', style: theme.titleLarge),
+              Text('matches.name', style: theme.titleLarge, ),
               const Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Lottie.asset(
+                    LottieAssets.waiting,
+                    width: 200,
+                    height: 200,
+                    alignment: Alignment.center,
+                  ),
+                ],
+              ),
               RichText(
                 text: TextSpan(
                   style: theme.bodyLarge,

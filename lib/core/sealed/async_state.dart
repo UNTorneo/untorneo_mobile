@@ -39,8 +39,7 @@ class AsyncError<T> implements AsyncState<T> {
 
 extension AsyncExtension<T> on AsyncState<T> {
   T? get data => (this is AsyncSuccess) ? (this as AsyncSuccess).data : null;
-  Failure? get error =>
-      (this is AsyncError) ? (this as AsyncError).error : null;
+  Failure? get error => (this is AsyncError) ? (this as AsyncError).error : null;
 
   bool get isLoading => this is AsyncLoading;
   bool get isInitial => this is AsyncInitial;
@@ -53,17 +52,16 @@ extension AsyncExtension<T> on AsyncState<T> {
     required W Function() onLoading,
     required W Function() onInitial,
   }) {
-    switch (runtimeType) {
-      case AsyncLoading:
-        return onLoading();
-      case AsyncInitial:
-        return onInitial();
-      case AsyncSuccess:
-        return onData((this as AsyncSuccess).data);
-      case AsyncError:
-        return onError((this as AsyncError).error);
-      default:
-        throw Exception('Invalid state');
+    if (this is AsyncLoading) {
+      return onLoading.call();
+    } else if (this is AsyncInitial) {
+      return onInitial.call();
+    } else if (this is AsyncSuccess<T>) {
+      return onData((this as AsyncSuccess).data);
+    } else if (this is AsyncError) {
+      return onError((this as AsyncError).error);
+    } else {
+      throw Exception('Invalid state');
     }
   }
 
@@ -73,17 +71,16 @@ extension AsyncExtension<T> on AsyncState<T> {
     required W Function() onLoading,
     required W Function() onInitial,
   }) {
-    switch (runtimeType) {
-      case AsyncLoading:
-        return onLoading();
-      case AsyncInitial:
-        return onInitial();
-      case AsyncSuccess:
-        return onData((this as AsyncSuccess).data);
-      case AsyncError:
-        return onError((this as AsyncError).error);
-      default:
-        throw Exception('Invalid state');
+    if (this is AsyncLoading) {
+      return onLoading.call();
+    } else if (this is AsyncInitial) {
+      return onInitial.call();
+    } else if (this is AsyncSuccess<T>) {
+      return onData((this as AsyncSuccess).data);
+    } else if (this is AsyncError) {
+      return onError((this as AsyncError).error);
+    } else {
+      throw Exception('Invalid state');
     }
   }
 
@@ -112,17 +109,16 @@ extension AsyncExtension<T> on AsyncState<T> {
     Widget Function()? onLoading,
     Widget Function()? onInitial,
   }) {
-    switch (runtimeType) {
-      case AsyncLoading:
-        return onLoading?.call() ?? const LoadingWidget();
-      case AsyncInitial:
-        return onInitial?.call() ?? onLoading?.call() ?? const LoadingWidget();
-      case AsyncSuccess:
-        return onData((this as AsyncSuccess).data);
-      case AsyncError:
-        return onError((this as AsyncError).error);
-      default:
-        throw Exception('Invalid state');
+    if (this is AsyncLoading) {
+      return onLoading?.call() ?? const LoadingWidget();
+    } else if (this is AsyncInitial) {
+      return onInitial?.call() ?? onLoading?.call() ?? const LoadingWidget();
+    } else if (this is AsyncSuccess<T>) {
+      return onData((this as AsyncSuccess).data);
+    } else if (this is AsyncError) {
+      return onError((this as AsyncError).error);
+    } else {
+      throw Exception('Invalid state');
     }
   }
 }
