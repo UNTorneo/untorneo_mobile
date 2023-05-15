@@ -10,6 +10,7 @@ import 'package:untorneo_mobile/features/auth/ui/profile_screen.dart';
 import 'package:untorneo_mobile/features/auth/ui/sign_up_screen.dart';
 import 'package:untorneo_mobile/features/error/error_screen.dart';
 import 'package:untorneo_mobile/features/home/ui/home_index_screen.dart';
+import 'package:untorneo_mobile/features/tournament_venues/ui/tournament_venues_home_screen.dart';
 import 'package:untorneo_mobile/features/tournaments/ui/tournament_detail_screen.dart';
 
 final globalKey = GlobalKey<NavigatorState>();
@@ -41,6 +42,7 @@ class CustomRouter extends Notifier<void> implements Listenable {
         ...tournamentRoutes,
         ...authRoutes,
         ...userRoutes,
+        ...venueRoutes,
         GoRoute(
           path: ErrorScreen.route,
           builder: (context, state) {
@@ -75,6 +77,15 @@ class CustomRouter extends Notifier<void> implements Listenable {
         return TournamentDetailScreen(tournamentId: id);
       },
     ),
+  ];
+
+  static final venueRoutes = <RouteBase>[
+    GoRoute(
+      path: TournamentVenuesHomeScreen.route,
+      builder: (context, state) {
+        return const TournamentVenuesHomeScreen();
+      },
+    )
   ];
 
   static final authRoutes = <RouteBase>[
