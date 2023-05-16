@@ -23,10 +23,10 @@ class ClanDetailScreen extends ConsumerStatefulWidget {
 class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
   @override
   void initState() {
-    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(clanProvider.notifier);
+      ref.read(clanProvider.notifier).getClanById(id: int.tryParse(widget.clanId)!);
     });
+    super.initState();
   }
 
   @override

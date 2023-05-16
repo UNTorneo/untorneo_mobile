@@ -35,10 +35,10 @@ class ClanDataSourceImpl implements ClanDataSource {
   Future<Clan> getClanById(int clanId) async {
     try {
       final options = QueryOptions(
-        document: gql(ClanQuerys.clans),
+        document: gql(ClanQuerys.getClanById),
         variables: {'clanByIdId': clanId},
       );
-      final res = await gqlHandler.query(options, 'clans');
+      final res = await gqlHandler.query(options, 'clanById');
       return Clan.fromMap(res);
     } catch (e, s) {
       Logger.logError(e.toString(), s);
@@ -59,17 +59,13 @@ class ClanDataSourceImpl implements ClanDataSource {
       rethrow;
     }
   }
-  
+
   @override
   Future<void> createClan(leaderId, name, createdAt) async {
     try {
       final options = MutationOptions(
         document: gql(ClanMutations.createClan),
-        variables: {
-          'leaderId': leaderId, 
-          'name': name,
-          'createdAt': createdAt
-        },
+        variables: {'leaderId': leaderId, 'name': name, 'createdAt': createdAt},
       );
       final res = await gqlHandler.mutate(options, 'createClan');
       Logger.log(res.toString());
@@ -78,16 +74,13 @@ class ClanDataSourceImpl implements ClanDataSource {
       rethrow;
     }
   }
-  
+
   @override
   Future<void> addUserToClan(clanId, userId) async {
     try {
       final options = MutationOptions(
         document: gql(ClanMutations.addUserToClan),
-        variables: {
-          'clanId': clanId,
-          'userId': userId
-        },
+        variables: {'clanId': clanId, 'userId': userId},
       );
       final res = await gqlHandler.mutate(options, 'addUserToClan');
       Logger.log(res.toString());

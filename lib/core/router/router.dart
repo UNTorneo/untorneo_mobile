@@ -8,6 +8,7 @@ import 'package:untorneo_mobile/features/auth/ui/login_screen.dart';
 import 'package:untorneo_mobile/features/auth/ui/my_profile_screen.dart';
 import 'package:untorneo_mobile/features/auth/ui/profile_screen.dart';
 import 'package:untorneo_mobile/features/auth/ui/sign_up_screen.dart';
+import 'package:untorneo_mobile/features/clans/ui/clan_detail_screen.dart';
 import 'package:untorneo_mobile/features/error/error_screen.dart';
 import 'package:untorneo_mobile/features/home/ui/home_index_screen.dart';
 import 'package:untorneo_mobile/features/tournament_venues/ui/tournament_venues_home_screen.dart';
@@ -15,8 +16,7 @@ import 'package:untorneo_mobile/features/tournaments/ui/tournament_detail_screen
 
 final globalKey = GlobalKey<NavigatorState>();
 
-final routerNotifierProvider =
-    NotifierProvider<CustomRouter, void>(() => CustomRouter());
+final routerNotifierProvider = NotifierProvider<CustomRouter, void>(() => CustomRouter());
 
 final routerProvider = Provider<GoRouter>((ref) {
   final notifier = ref.watch(routerNotifierProvider.notifier);
@@ -43,6 +43,7 @@ class CustomRouter extends Notifier<void> implements Listenable {
         ...authRoutes,
         ...userRoutes,
         ...venueRoutes,
+        ...clansRoutes,
         GoRoute(
           path: ErrorScreen.route,
           builder: (context, state) {
@@ -65,6 +66,21 @@ class CustomRouter extends Notifier<void> implements Listenable {
           builder: (context, state) => const IndexHomeScreen(),
         ),
       ];
+
+  static final clansRoutes = <RouteBase>[
+    GoRoute(
+      path: ClanDetailScreen.routeParams,
+      builder: (context, state) {
+        final id = state.pathParameters['id'];
+        if (id == null) {
+          return ErrorScreen(error: atributeErrorMessage('id'));
+        }
+        return ClanDetailScreen(
+          clanId: id,
+        );
+      },
+    ),
+  ];
 
   static final tournamentRoutes = <RouteBase>[
     GoRoute(
@@ -90,20 +106,20 @@ class CustomRouter extends Notifier<void> implements Listenable {
 
   static final authRoutes = <RouteBase>[
     GoRoute(
-        path: SignUpScreen.route,
-        builder: (context, state) => const SignUpScreen(),
-      ),
+      path: SignUpScreen.route,
+      builder: (context, state) => const SignUpScreen(),
+    ),
   ];
 
   static final userRoutes = <RouteBase>[
-      GoRoute(
-        path: ProfileScreen.route,
-        builder: (context, state) => const ProfileScreen(),
-      ),
-      GoRoute(
-        path: MyProfileScreen.route,
-        builder: (context, state) => const MyProfileScreen(),
-      ),
+    GoRoute(
+      path: ProfileScreen.route,
+      builder: (context, state) => const ProfileScreen(),
+    ),
+    GoRoute(
+      path: MyProfileScreen.route,
+      builder: (context, state) => const MyProfileScreen(),
+    ),
   ];
 
   static String atributeErrorMessage(String atribute) {
@@ -125,8 +141,7 @@ class CustomRouter extends Notifier<void> implements Listenable {
 
   @override
   FutureOr<void> build() async {
-    isAuth =
-        ref.watch(authProvider.select((state) => state.authModel)).isSuccess;
+    isAuth = ref.watch(authProvider.select((state) => state.authModel)).isSuccess;
     ref.listenSelf((_, __) {
       routerListener?.call();
     });

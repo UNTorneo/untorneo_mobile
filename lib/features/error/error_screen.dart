@@ -18,6 +18,7 @@ class ErrorScreen extends StatelessWidget {
     return AnimatedBackground(
       child: Column(
         children: [
+          if (Navigator.of(context).canPop()) const BackButton(),
           const Spacer(),
           Lottie.asset(
             LottieAssets.error,
@@ -38,8 +39,7 @@ class ErrorScreen extends StatelessWidget {
           const SizedBox(height: 20),
           Text(
             error,
-            style:
-                Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 18),
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 18),
           ),
           if (GoRouter.of(context).canPop()) ...[
             const SizedBox(height: 20),

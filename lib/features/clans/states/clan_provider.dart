@@ -34,13 +34,9 @@ class ClanProvider extends StateNotifier<ClanState> {
     if (id <= 0) return;
     state = state.copyWith(clanById: const AsyncState.loading());
     final result = await clanRepository.getClanById(id);
-    result.fold(
-      (l) => (failure) => state = state.copyWith(clanById: AsyncState.error(failure)),
-      (r) => (newClan) {
-        state = state.copyWith(
-          clanById: AsyncState.success(newClan),
-        );
-      },
+    state = result.fold(
+      (failure) => state.copyWith(clanById: AsyncState.error(failure)),
+      (newClan) => state.copyWith(clanById: AsyncState.success(newClan)),
     );
   }
 
