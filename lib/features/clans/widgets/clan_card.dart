@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:untorneo_mobile/core/theme/theme.dart';
 import 'package:untorneo_mobile/features/clans/model/clan_model.dart';
-import 'package:untorneo_mobile/features/tournaments/ui/tournament_detail_screen.dart';
 
 class ClanCard extends ConsumerWidget {
   const ClanCard({

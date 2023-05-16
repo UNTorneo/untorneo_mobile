@@ -47,7 +47,7 @@ class TournamentVenuePopulated extends Equatable {
 
   TournamentVenuePopulated copyWith({
     String? id,
-    String? name,
+    String? name, 
     List<String>? teams,
     TournamentSport? sport,
     TournamentMode? mode,

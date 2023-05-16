@@ -36,7 +36,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       child: CircleAvatar(
                       radius: 60,
                       child: Text('PHOTO'),
-                    )
+                    ),
                     ),
                   ],
                 ),

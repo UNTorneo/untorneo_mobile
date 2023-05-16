@@ -34,7 +34,7 @@ class ChatBubble extends StatelessWidget {
                 username,
                 style: const TextStyle(
                   color: Colors.blue,
-                  fontWeight: FontWeight.bold
+                  fontWeight: FontWeight.bold,
                 ),
               )
               : const SizedBox(),

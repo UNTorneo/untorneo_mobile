@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:untorneo_mobile/core/sealed/async_state.dart';
 import 'package:untorneo_mobile/features/clans/model/clan_model.dart';
-import 'package:untorneo_mobile/features/tournament_venues/models/venue_model.dart';
 
 class ClanState extends Equatable {
   const ClanState({

@@ -16,6 +16,20 @@ final class AuthMutations {
     login(email: $email, password: $password) {
       ... on RequestToken {
         accessToken
+        user {
+          id
+          name
+          lastName
+          username
+          birthday
+          email
+          countryId
+          cityId
+          latitude
+          longitude
+          isActive
+          photoUrl
+        }
       }
       ... on ErrorResponse {
         error
