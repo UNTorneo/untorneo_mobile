@@ -5,7 +5,7 @@ import 'package:untorneo_mobile/features/clans/model/clan_model.dart';
 
 class ClanCard extends ConsumerWidget {
   const ClanCard({
-    super.key, 
+    super.key,
     required this.clan,
   });
 
@@ -30,7 +30,7 @@ class ClanCard extends ConsumerWidget {
               children: [
                 const TextSpan(text: 'Creado el '),
                 TextSpan(
-                  text: clan.createdAt,
+                  text: clan.createdAt.substring(0, 9),
                   style: theme.titleMedium,
                 ),
               ],

@@ -16,8 +16,8 @@ class ClanProvider extends StateNotifier<ClanState> {
     required this.clanRepository,
     required this.ref,
   }) : super(
-    const ClanState(clanById: AsyncState.initial(), clans: AsyncState.initial()),
-  );
+          const ClanState(clanById: AsyncState.initial(), clans: AsyncState.initial()),
+        );
 
   factory ClanProvider.fromRead(Ref ref) {
     final clanRepository = ref.read(clanRepositoryProvider);
@@ -48,12 +48,10 @@ class ClanProvider extends StateNotifier<ClanState> {
     state = state.copyWith(clans: const AsyncState.loading());
     final result = await clanRepository.getClans();
     result.fold(
-      (l) => (failure) => state = state.copyWith(clans: AsyncState.error(failure)),
-      (r) => (clans) {
-        state = state.copyWith(
-          clans: AsyncState.success(r),
-        );
-      },
+      (l) => state = state.copyWith(clans: AsyncState.error(l)),
+      (r) => state = state.copyWith(
+        clans: AsyncState.success(r),
+      ),
     );
   }
 

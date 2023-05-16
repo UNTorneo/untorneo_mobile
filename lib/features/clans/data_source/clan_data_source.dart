@@ -53,7 +53,7 @@ class ClanDataSourceImpl implements ClanDataSource {
         document: gql(ClanQuerys.clans),
       );
       final res = await gqlHandler.queryList(options, 'clans');
-      return List.from(res).map((e) => Clan.fromJson(e)).toList();
+      return List.from(res).map((e) => Clan.fromMap(e)).toList();
     } catch (e, s) {
       Logger.logError(e.toString(), s);
       rethrow;
