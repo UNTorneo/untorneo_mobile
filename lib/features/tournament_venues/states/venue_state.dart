@@ -8,6 +8,13 @@ class VenueState extends Equatable {
     required this.venues,
   });
 
+  factory VenueState.initial() {
+    return const VenueState(
+      venueById: AsyncState.initial(),
+      venues: AsyncState.initial(),
+    );
+  }
+
   final AsyncState<Venue> venueById;
   final AsyncState<List<Venue>> venues;
 

@@ -32,82 +32,24 @@ class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
-    final tournamentState = ref.watch(tournamentProvider);
-    return tournamentState.tournamentVenuePopulated.when(
+    final clanState = ref.watch(clanProvider);
+    return clanState.clanById.on(
       onError: (error) => ErrorScreen(error: error.message),
       onInitial: () => const Scaffold(body: ScreenLoadingWidget()),
       onLoading: () => const Scaffold(body: ScreenLoadingWidget()),
-      onData: (tournamentDetail) => Scaffold(
-        appBar: AppBar(title: Text(tournamentDetail.name)),
+      onData: (data) => Scaffold(
+        appBar: AppBar(title: Text(data.name)),
         body: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            Text('Deporte', style: theme.titleLarge),
-            Text(tournamentDetail.sport.name, style: theme.titleMedium),
+            Text('Líder', style: theme.titleLarge),
+            Text(data.leaderId.toString(), style: theme.titleMedium),
             const SizedBox(height: 12),
-            Text('Descripción', style: theme.titleMedium),
-            Text(tournamentDetail.sport.description, style: theme.bodyMedium),
+            Text('Creado el', style: theme.titleMedium),
+            Text(data.createdAt, style: theme.bodyMedium),
             const SizedBox(height: 12),
-            Text('Recomendaciones', style: theme.titleMedium),
-            ...(tournamentDetail.sport.recommendation ?? []).map((e) => Text('- $e')),
-            const SizedBox(height: 12),
-            const Divider(),
-            Text('Modo', style: theme.titleLarge),
-            Text(tournamentDetail.mode.name, style: theme.titleMedium),
-            const SizedBox(height: 12),
-            if (tournamentDetail.mode.description != null) ...[
-              Text('Descripción', style: theme.titleMedium),
-              Text(tournamentDetail.mode.description!, style: theme.bodyMedium),
-              const SizedBox(height: 12),
-            ],
-            if (tournamentDetail.mode.winningPoints != null) ...[
-              FieldItemWidget(
-                title: 'Puntos para ganar',
-                value: tournamentDetail.mode.winningPoints.toString(),
-              ),
-              const SizedBox(height: 12),
-            ],
-            if (tournamentDetail.mode.playersPerTeam != null) ...[
-              FieldItemWidget(
-                title: 'Jugadores por equipo',
-                value: tournamentDetail.mode.playersPerTeam.toString(),
-              ),
-              const SizedBox(height: 12),
-            ],
-            if (tournamentDetail.mode.teamsNumber != null) ...[
-              FieldItemWidget(
-                title: 'Número de equipos',
-                value: tournamentDetail.mode.teamsNumber.toString(),
-              ),
-              const SizedBox(height: 12),
-            ],
-            const Divider(),
-            if (tournamentDetail.clan != null) ...[
-              Text('Clan', style: theme.titleLarge),
-              Text(tournamentDetail.clan!.name, style: theme.titleMedium),
-              const SizedBox(height: 12),
-              FieldItemWidget(
-                title: 'Creado el',
-                value: Formatters.dateFormatter(tournamentDetail.clan!.createdAt),
-              ),
-              const SizedBox(height: 12),
-              const Divider(),
-            ],
-            if (tournamentDetail.venue != null) ...[
-              Text('Sede', style: theme.titleLarge),
-              Text(tournamentDetail.venue!.location, style: theme.titleMedium),
-              const SizedBox(height: 12),
-              Text('Ubicación', style: theme.titleMedium),
-              Text(tournamentDetail.venue!.location, style: theme.bodyMedium),
-              const SizedBox(height: 12),
-              Text('Descripción', style: theme.titleMedium),
-              Text(
-                tournamentDetail.venue!.description,
-                style: theme.bodyMedium,
-              ),
-              const SizedBox(height: 12),
-              const Divider(),
-            ],
+
+            //Lista de usuarios
           ],
         ),
       ),

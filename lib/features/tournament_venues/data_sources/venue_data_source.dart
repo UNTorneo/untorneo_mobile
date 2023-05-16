@@ -27,7 +27,7 @@ class VenueDataSourceImpl implements VenueDataSource {
   final GraphQLHandler gqlHandler;
   final DBHandler dbHandler;
   final Ref ref;
-  
+
   @override
   Future<List<Venue>> getVenues() async {
     try {
@@ -35,7 +35,7 @@ class VenueDataSourceImpl implements VenueDataSource {
         document: gql(VenueQuerys.getVenues),
       );
       final res = await gqlHandler.queryList(options, 'getVenues');
-      return List.from(res).map((e) => Venue.fromJson(e)).toList();
+      return List.from(res).map((e) => Venue.fromMap(e)).toList();
     } catch (e, s) {
       Logger.logError(e.toString(), s);
       rethrow;
@@ -47,9 +47,7 @@ class VenueDataSourceImpl implements VenueDataSource {
     try {
       final options = QueryOptions(
         document: gql(VenueQuerys.getVenue),
-        variables: {
-          'getVenueId':id
-        },
+        variables: {'getVenueId': id},
       );
       final res = await gqlHandler.query(options, 'getVenue');
       return Venue.fromMap(res);

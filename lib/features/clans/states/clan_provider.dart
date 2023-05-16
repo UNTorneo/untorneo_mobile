@@ -56,4 +56,12 @@ class ClanProvider extends StateNotifier<ClanState> {
       },
     );
   }
+
+  Future<void> createClan(leaderId, name, createdAt) async {
+    final result = await clanRepository.createClan(leaderId, name, createdAt);
+    result.fold(
+      (l) => (failure) => state = state.copyWith(clans: AsyncState.error(failure)),
+      (r) => null,
+    );
+  }
 }
