@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untorneo_mobile/core/sealed/async_state.dart';
 import 'package:untorneo_mobile/features/clans/states/clan_provider.dart';
+import 'package:untorneo_mobile/features/clans/ui/create_clan_form_bottom_sheet.dart';
 import 'package:untorneo_mobile/features/clans/widgets/clan_card.dart';
 import 'package:untorneo_mobile/widgets/loading/screen_loading_widget.dart';
 import 'package:untorneo_mobile/widgets/widgets/custom_text_field.dart';
@@ -35,11 +36,13 @@ class _ClansScreen extends ConsumerState<ClansScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('Clanes')),
       body: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(
             height: 20,
           ),
           Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Flexible(
                 child: CustomTextField(
@@ -81,7 +84,15 @@ class _ClansScreen extends ConsumerState<ClansScreen> {
                 },
               ),
             ),
-          )
+          ),
+          FloatingActionButton.extended(
+            label: const Text('Crear'),
+            onPressed: () {
+              CreateClanFormBottomSheet.show(context: context);
+            },
+            icon: const Icon(Icons.add),
+          ),
+          const SizedBox(height: 10),
         ],
       ),
     );
@@ -90,7 +101,7 @@ class _ClansScreen extends ConsumerState<ClansScreen> {
   void _onGetClanById() {
     if (_toSearchIdController.value.text.isEmpty) return;
     ref.read(clanProvider.notifier).getClanById(
-          id: int.parse(_toSearchIdController.value.text),
-        );
+      id: int.parse(_toSearchIdController.value.text),
+    );
   }
 }

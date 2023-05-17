@@ -46,7 +46,7 @@ class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
             Text(data.leaderId.toString(), style: theme.titleMedium),
             const SizedBox(height: 12),
             Text('Creado el', style: theme.titleMedium),
-            Text(data.createdAt.substring(0,9), style: theme.bodyMedium),
+            Text(data.createdAt.substring(0, 9), style: theme.bodyMedium),
             const SizedBox(height: 12),
 
             //Lista de usuarios
