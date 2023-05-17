@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untorneo_mobile/core/sealed/async_state.dart';
-import 'package:untorneo_mobile/core/utils/formatters.dart';
 import 'package:untorneo_mobile/features/clans/states/clan_provider.dart';
 import 'package:untorneo_mobile/features/error/error_screen.dart';
-import 'package:untorneo_mobile/features/tournaments/state/tournament_provider.dart';
-import 'package:untorneo_mobile/widgets/fields/field_item_widget.dart';
 import 'package:untorneo_mobile/widgets/loading/screen_loading_widget.dart';
 
 class ClanDetailScreen extends ConsumerStatefulWidget {
@@ -50,9 +47,22 @@ class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
             const SizedBox(height: 12),
 
             //Lista de usuarios
+
+            FloatingActionButton.extended(
+              label: const Text('Únete'),
+              icon: const Icon(Icons.group_add),
+              onPressed: _onUniteHandle,
+            )
           ],
         ),
       ),
+    );
+  }
+
+  void _onUniteHandle() {
+    ref.read(clanProvider.notifier).addUserToClan(
+      widget.clanId,
+      1,
     );
   }
 }
