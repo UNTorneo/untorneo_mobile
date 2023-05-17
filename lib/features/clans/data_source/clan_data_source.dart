@@ -6,12 +6,14 @@ import 'package:untorneo_mobile/core/logger/logger.dart';
 import 'package:untorneo_mobile/features/clans/model/clan_model.dart';
 import 'package:untorneo_mobile/features/clans/mutations/clan_mutations.dart';
 import 'package:untorneo_mobile/features/clans/querys/clan_querys.dart';
+import 'package:untorneo_mobile/features/users/models/user_model.dart';
 
 final clanDataSourceProvider = Provider<ClanDataSource>(ClanDataSourceImpl.fromRef);
 
 abstract class ClanDataSource {
   Future<Clan> getClanById(int venueId);
   Future<List<Clan>> getClans();
+  Future<List<UserModel>> getUsersByClanId(clanId);
   Future<void> createClan(leaderId, name, createdAt);
   Future<void> addUserToClan(clanId, userId);
 }
@@ -84,6 +86,24 @@ class ClanDataSourceImpl implements ClanDataSource {
       );
       final res = await gqlHandler.mutate(options, 'addUserToClan');
       Logger.log(res.toString());
+    } catch (e, s) {
+      Logger.logError(e.toString(), s);
+      rethrow;
+    }
+  }
+  
+  @override
+  Future<List<UserModel>> getUsersByClanId(clanId) async {
+    try {
+      final options = QueryOptions(
+        document: gql(ClanQuerys.getUsersByClanId),
+        variables: {'calnId' : clanId},
+      );
+      final res = await gqlHandler.queryList(options, 'usersByClanId');
+      Logger.log('**************************************************');
+      Logger.log(res.toString());
+      Logger.log('**************************************************');
+      return List.from(res).map((e) => UserModel.fromJson(e)).toList();
     } catch (e, s) {
       Logger.logError(e.toString(), s);
       rethrow;
