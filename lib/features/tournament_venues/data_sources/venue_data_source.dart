@@ -4,6 +4,7 @@ import 'package:untorneo_mobile/core/external/db_handler.dart';
 import 'package:untorneo_mobile/core/external/gql_handler.dart';
 import 'package:untorneo_mobile/core/logger/logger.dart';
 import 'package:untorneo_mobile/features/tournament_venues/models/venue_model.dart';
+import 'package:untorneo_mobile/features/tournament_venues/mutations/venue_mutations.dart';
 import 'package:untorneo_mobile/features/tournament_venues/queries/venue_queries.dart';
 
 final venueDataSourceProvider = Provider<VenueDataSource>(VenueDataSourceImpl.fromRef);
@@ -11,6 +12,7 @@ final venueDataSourceProvider = Provider<VenueDataSource>(VenueDataSourceImpl.fr
 abstract class VenueDataSource {
   Future<Venue> getVenueById(int venueId);
   Future<List<Venue>> getVenues();
+  Future<void> addVenue(Venue newVenue);
 }
 
 class VenueDataSourceImpl implements VenueDataSource {
@@ -56,4 +58,21 @@ class VenueDataSourceImpl implements VenueDataSource {
       rethrow;
     }
   }
+  
+  @override
+  Future<void> addVenue(newVenue) async {
+    try {
+      final options = MutationOptions(
+        document: gql(VenueMutations.addVenue),
+        variables: {'venue' : newVenue.toMap()},
+      );
+      final res = await gqlHandler.mutate(options, 'addVenue');
+      Logger.log(res.toString());
+    } catch (e, s) {
+      Logger.logError(e.toString(), s);
+      rethrow;
+    }
+  }
+
+
 }

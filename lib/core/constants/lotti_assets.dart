@@ -8,5 +8,5 @@ class LottieAssets {
   static const confirmed = 'assets/lottie/confirmed.json';
   static const waiting = 'assets/lottie/waiting.json';
   static const matchScore = 'assets/lottie/match_score.json';
-  static const notFound = 'packages/oyt_front_core/assets/lottie/not-found.json';
+  static const notFound = 'assets/lottie/not-found.json';
 }

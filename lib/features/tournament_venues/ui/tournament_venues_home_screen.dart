@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:untorneo_mobile/core/constants/lotti_assets.dart';
 import 'package:untorneo_mobile/core/sealed/async_state.dart';
 import 'package:untorneo_mobile/features/tournament_venues/states/venue_provider.dart';
+import 'package:untorneo_mobile/features/tournament_venues/ui/create_venue_form.dart';
 import 'package:untorneo_mobile/features/tournament_venues/ui/widgets/venue_card.dart';
 import 'package:untorneo_mobile/widgets/loading/screen_loading_widget.dart';
 import 'package:untorneo_mobile/widgets/widgets/custom_text_field.dart';
@@ -51,6 +53,12 @@ class _TournamentVenuesHomeScreenState extends ConsumerState<TournamentVenuesHom
               )
             ],
           ),
+          const SizedBox(height: 10,),
+          ElevatedButton.icon(
+            onPressed: _onCreateVenueHandle, 
+            icon: const Icon(Icons.create), 
+            label: const Text('Inscribe tu sede'),
+          ),
           Expanded(
             child: Scrollbar(
               child: venueState.venueById.on(
@@ -89,36 +97,6 @@ class _TournamentVenuesHomeScreenState extends ConsumerState<TournamentVenuesHom
                     });
                     return const ScreenLoadingWidget();
                   },
-                  /*
-              child: venueState.venueById.on(
-                onData: (data) => TournamentVenueCard(venue: data),
-                onError: (error) => Text(error.message),
-                onLoading: () => const ScreenLoadingWidget(),
-                onInitial: () => venueState.venues.on(
-                  onData: (data) => data.isNotEmpty
-                      ? ListView.builder(
-                          itemBuilder: (context, index) => TournamentVenueCard(
-                            venue: data[index],
-                          ),
-                        )
-                      : Column(
-                        children: [
-                          Container(
-                              alignment: Alignment.center,
-                              height: 250,
-                              width: 250,
-                              child: Lottie.asset(
-                                LottieAssets.notFound,
-                              ),
-                            ),
-                          const Text('No hay ninguna sede'),
-                        ],
-                      ),
-                  onError: (error) => Text(error.message),
-                  onLoading: () => const ScreenLoadingWidget(),
-                  onInitial: () => const ScreenLoadingWidget(),
-                ),
-              ),*/
                 ),
               ),
             ),
@@ -131,7 +109,13 @@ class _TournamentVenuesHomeScreenState extends ConsumerState<TournamentVenuesHom
   void _onGetVenueById() {
     if (_toSearchIdController.value.text.isEmpty) return;
     ref.read(venueProvider.notifier).getVenueById(
-          id: int.parse(_toSearchIdController.value.text),
-        );
+      id: int.parse(_toSearchIdController.value.text),
+    );
+  }
+
+  void _onCreateVenueHandle() {
+    GoRouter.of(context).push(
+      CreateVenueFormScreen.route,
+    );
   }
 }
