@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:untorneo_mobile/core/sealed/async_state.dart';
 import 'package:untorneo_mobile/features/clans/states/clan_provider.dart';
 import 'package:untorneo_mobile/features/error/error_screen.dart';
@@ -39,6 +40,7 @@ class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
         body: ListView(
           padding: const EdgeInsets.all(16),
           children: [
+            if (Navigator.of(context).canPop()) const BackButton(),
             Text('Líder', style: theme.titleLarge),
             Text(data.leaderId.toString(), style: theme.titleMedium),
             const SizedBox(height: 12),
@@ -64,5 +66,6 @@ class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
       widget.clanId,
       1,
     );
+    GoRouter.of(context).pop;
   }
 }
