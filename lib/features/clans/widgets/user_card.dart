@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:untorneo_mobile/core/theme/theme.dart';
-import 'package:untorneo_mobile/features/clans/model/clan_model.dart';
-import 'package:untorneo_mobile/features/clans/ui/clan_detail_screen.dart';
 import 'package:untorneo_mobile/features/users/models/user_model.dart';
 
 class UserCard extends ConsumerWidget {

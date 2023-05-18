@@ -26,10 +26,12 @@ class CreateClanFormBottomSheet extends ConsumerStatefulWidget {
   }
 
   @override
-  ConsumerState<CreateClanFormBottomSheet> createState() => _CreateClanFormBottomSheetState();
+  ConsumerState<CreateClanFormBottomSheet> createState() =>
+      _CreateClanFormBottomSheetState();
 }
 
-class _CreateClanFormBottomSheetState extends ConsumerState<CreateClanFormBottomSheet> {
+class _CreateClanFormBottomSheetState
+    extends ConsumerState<CreateClanFormBottomSheet> {
   final nameController = TextEditingController();
 
   @override
@@ -49,8 +51,10 @@ class _CreateClanFormBottomSheetState extends ConsumerState<CreateClanFormBottom
             children: [
               Text(
                 'Crea tu clan',
-                style:
-                    Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -83,8 +87,9 @@ class _CreateClanFormBottomSheetState extends ConsumerState<CreateClanFormBottom
     Logger.log(clanState.clans.toString());
     Logger.log('*********************************************');
     try {
+      if (!mounted) return;
       GoRouter.of(context).push(
-        '${ClanDetailScreen.route}/${clanState.clans.data!.length+1}',
+        '${ClanDetailScreen.route}/${clanState.clans.data!.length + 1}',
       );
     } catch (e, s) {
       Logger.logError(e.toString(), s);

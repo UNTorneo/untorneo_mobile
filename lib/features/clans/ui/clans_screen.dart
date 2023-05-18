@@ -56,9 +56,7 @@ class _ClansScreen extends ConsumerState<ClansScreen> {
                 icon: const Icon(Icons.search),
               ),
               IconButton(
-                onPressed: () {
-                  ref.refresh(clanProvider);
-                },
+                onPressed: () => ref.refresh(clanProvider),
                 icon: const Icon(Icons.delete),
               )
             ],
@@ -71,7 +69,8 @@ class _ClansScreen extends ConsumerState<ClansScreen> {
                     ? ListView.builder(
                         controller: _scrollController,
                         itemCount: data.length,
-                        itemBuilder: (context, index) => ClanCard(clan: data[index]),
+                        itemBuilder: (context, index) =>
+                            ClanCard(clan: data[index]),
                       )
                     : const Text('No hay ningún clan'),
                 onError: (error) => Text(error.message),
@@ -101,7 +100,7 @@ class _ClansScreen extends ConsumerState<ClansScreen> {
   void _onGetClanById() {
     if (_toSearchIdController.value.text.isEmpty) return;
     ref.read(clanProvider.notifier).getClanById(
-      id: int.parse(_toSearchIdController.value.text),
-    );
+          id: int.parse(_toSearchIdController.value.text),
+        );
   }
 }

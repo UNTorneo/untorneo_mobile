@@ -4,11 +4,6 @@ final class TournamentQuery {
       getTournaments {
         id
         name
-        teams
-        sportId
-        modeId
-        clanId
-        venueId
         venueName
         access
         status

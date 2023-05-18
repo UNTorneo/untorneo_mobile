@@ -16,10 +16,12 @@ class TournamentVenuesHomeScreen extends ConsumerStatefulWidget {
   static const route = '/tournament_venues_home';
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _TournamentVenuesHomeScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _TournamentVenuesHomeScreenState();
 }
 
-class _TournamentVenuesHomeScreenState extends ConsumerState<TournamentVenuesHomeScreen> {
+class _TournamentVenuesHomeScreenState
+    extends ConsumerState<TournamentVenuesHomeScreen> {
   final _toSearchIdController = TextEditingController();
 
   @override
@@ -46,17 +48,17 @@ class _TournamentVenuesHomeScreenState extends ConsumerState<TournamentVenuesHom
                 icon: const Icon(Icons.search),
               ),
               IconButton(
-                onPressed: () {
-                  ref.refresh(venueProvider);
-                },
+                onPressed: () => ref.refresh(venueProvider),
                 icon: const Icon(Icons.delete),
               )
             ],
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(
+            height: 10,
+          ),
           ElevatedButton.icon(
-            onPressed: _onCreateVenueHandle, 
-            icon: const Icon(Icons.create), 
+            onPressed: _onCreateVenueHandle,
+            icon: const Icon(Icons.create),
             label: const Text('Inscribe tu sede'),
           ),
           Expanded(
@@ -64,7 +66,8 @@ class _TournamentVenuesHomeScreenState extends ConsumerState<TournamentVenuesHom
               child: venueState.venueById.on(
                 onData: (venue) => ListView.builder(
                   itemCount: 1,
-                  itemBuilder: (context, index) => TournamentVenueCard(venue: venue),
+                  itemBuilder: (context, index) =>
+                      TournamentVenueCard(venue: venue),
                 ),
                 onError: (error) => Text(error.message),
                 onLoading: () => const ScreenLoadingWidget(),
@@ -109,8 +112,8 @@ class _TournamentVenuesHomeScreenState extends ConsumerState<TournamentVenuesHom
   void _onGetVenueById() {
     if (_toSearchIdController.value.text.isEmpty) return;
     ref.read(venueProvider.notifier).getVenueById(
-      id: int.parse(_toSearchIdController.value.text),
-    );
+          id: int.parse(_toSearchIdController.value.text),
+        );
   }
 
   void _onCreateVenueHandle() {

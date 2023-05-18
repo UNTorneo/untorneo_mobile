@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
-import 'package:untorneo_mobile/core/constants/lotti_assets.dart';
 import 'package:untorneo_mobile/core/sealed/async_state.dart';
 import 'package:untorneo_mobile/core/theme/theme.dart';
 import 'package:untorneo_mobile/features/matches/state/matches_provider.dart';
