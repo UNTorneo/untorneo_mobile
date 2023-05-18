@@ -12,12 +12,14 @@ import 'package:untorneo_mobile/features/clans/ui/clan_detail_screen.dart';
 import 'package:untorneo_mobile/features/error/error_screen.dart';
 import 'package:untorneo_mobile/features/home/ui/home_index_screen.dart';
 import 'package:untorneo_mobile/features/tournament_venues/ui/create_venue_form.dart';
+import 'package:untorneo_mobile/features/matches/ui/matches_detail_screen.dart';
 import 'package:untorneo_mobile/features/tournament_venues/ui/tournament_venues_home_screen.dart';
 import 'package:untorneo_mobile/features/tournaments/ui/tournament_detail_screen.dart';
 
 final globalKey = GlobalKey<NavigatorState>();
 
-final routerNotifierProvider = NotifierProvider<CustomRouter, void>(() => CustomRouter());
+final routerNotifierProvider =
+    NotifierProvider<CustomRouter, void>(() => CustomRouter());
 
 final routerProvider = Provider<GoRouter>((ref) {
   final notifier = ref.watch(routerNotifierProvider.notifier);
@@ -45,6 +47,7 @@ class CustomRouter extends Notifier<void> implements Listenable {
         ...userRoutes,
         ...venueRoutes,
         ...clansRoutes,
+        ...matchesRoutes,
         GoRoute(
           path: ErrorScreen.route,
           builder: (context, state) {
@@ -79,6 +82,19 @@ class CustomRouter extends Notifier<void> implements Listenable {
         return ClanDetailScreen(
           clanId: id,
         );
+      },
+    ),
+  ];
+
+  static final matchesRoutes = <RouteBase>[
+    GoRoute(
+      path: MatchesDetailScreen.routeParams,
+      builder: (context, state) {
+        final id = state.pathParameters['id'];
+        if (id == null) {
+          return ErrorScreen(error: atributeErrorMessage('id'));
+        }
+        return MatchesDetailScreen(id: id);
       },
     ),
   ];
@@ -148,7 +164,8 @@ class CustomRouter extends Notifier<void> implements Listenable {
 
   @override
   FutureOr<void> build() async {
-    isAuth = ref.watch(authProvider.select((state) => state.authModel)).isSuccess;
+    isAuth =
+        ref.watch(authProvider.select((state) => state.authModel)).isSuccess;
     ref.listenSelf((_, __) {
       routerListener?.call();
     });

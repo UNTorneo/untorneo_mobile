@@ -4,7 +4,7 @@ import 'package:untorneo_mobile/core/enums/matches_state_enum.dart';
 final class MatchesModel extends Equatable {
   const MatchesModel(
     this.id,
-    this.tournamentId,
+    this.tournamentName,
     this.homeTeam,
     this.visitingTeam,
     this.homeTeamScore,
@@ -19,9 +19,9 @@ final class MatchesModel extends Equatable {
   factory MatchesModel.fromJson(Map<String, dynamic> map) {
     return MatchesModel(
       map['id'] as String,
-      map['tournamentId'] as String,
-      map['homeTeam'] as String,
-      map['visitingTeam'] as String,
+      map['tournamentId']['name'] as String,
+      map['homeTeam']['name'] as String,
+      map['visitingTeam']['name'] as String,
       map['homeTeamScore'] as int,
       map['visitingTeamScore'] as int,
       map['date'] as String,
@@ -35,7 +35,7 @@ final class MatchesModel extends Equatable {
   CurrentMatcheState get state => CurrentMatcheState.fromString(status);
 
   final String id;
-  final String tournamentId;
+  final String tournamentName;
   final String homeTeam;
   final String visitingTeam;
   final int homeTeamScore;
@@ -50,7 +50,7 @@ final class MatchesModel extends Equatable {
   List<Object> get props {
     return [
       id,
-      tournamentId,
+      tournamentName,
       homeTeam,
       visitingTeam,
       homeTeamScore,

@@ -1,16 +1,21 @@
 final class MatchesQuerys {
   static const getMatches = r'''
-    query GetTournamentsByStatus($status: String!) {
-      getTournamentsByStatus(status: $status) {
+    query GetMatches {
+      getMatches {
         id
-        name
-        teams
-        sportId
-        modeId
-        clanId
-        venueId
-        venueName
-        access
+        tournamentId {
+          name
+        }
+        homeTeam {
+          name
+        }
+        visitingTeam {
+          name
+        }
+        homeTeamScore
+        visitingTeamScore
+        date
+        courtId
         status
         createdAt
         updatedAt

@@ -17,7 +17,7 @@ class MatchesNotifier extends StateNotifier<MatchesState> {
 
   final MatchesRepository matchesRepository;
 
-  Future<void> getMatchess() async {
+  Future<void> getMatches() async {
     state = state.copyWith(matches: const AsyncState.loading());
     final res = await matchesRepository.getMatches();
     res.fold(
