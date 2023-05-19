@@ -55,6 +55,13 @@ class _TournamentDetailScreenState
                 .map((e) => Text('- $e')),
             const SizedBox(height: 12),
             const Divider(),
+            Text('Equipos', style: theme.titleLarge),
+            const SizedBox(height: 12),
+            ...tournamentDetail.teams.map(
+              (e) => Text('- $e', style: theme.titleMedium),
+            ),
+            const SizedBox(height: 12),
+            const Divider(),
             Text('Modo', style: theme.titleLarge),
             Text(tournamentDetail.mode.name, style: theme.titleMedium),
             const SizedBox(height: 12),

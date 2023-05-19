@@ -18,7 +18,9 @@ final class TournamentQuery {
       getTournament(id: $getTournamentId) {
         id
         name
-        teams
+        teams {
+          name
+        }
         sportId {
           _id
           name

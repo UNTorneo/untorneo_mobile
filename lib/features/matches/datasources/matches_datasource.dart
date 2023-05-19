@@ -3,6 +3,7 @@ import 'package:graphql/client.dart';
 import 'package:untorneo_mobile/core/external/gql_handler.dart';
 import 'package:untorneo_mobile/core/logger/logger.dart';
 import 'package:untorneo_mobile/features/matches/gql/matches_querys.dart';
+import 'package:untorneo_mobile/features/matches/models/match_model.dart';
 import 'package:untorneo_mobile/features/matches/models/matches_model.dart';
 
 final matchesDatasourceProvider =
@@ -10,6 +11,7 @@ final matchesDatasourceProvider =
 
 abstract class MatchesDatasource {
   Future<List<MatchesModel>> getMatches();
+  Future<MatchModel> getMatch(String id);
 }
 
 class MatchesDatasourceImpl implements MatchesDatasource {
@@ -33,6 +35,21 @@ class MatchesDatasourceImpl implements MatchesDatasource {
       );
       final res = await gqlHandler.queryList(options, 'getMatches');
       return List.from(res).map((e) => MatchesModel.fromJson(e)).toList();
+    } catch (e, s) {
+      Logger.logError(e.toString(), s);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<MatchModel> getMatch(String id) async {
+    try {
+      final options = QueryOptions(
+        document: gql(MatchesQuerys.getMatch),
+        variables: {'getMatchId': id},
+      );
+      final res = await gqlHandler.query(options, 'getMatch');
+      return MatchModel.fromJson(res);
     } catch (e, s) {
       Logger.logError(e.toString(), s);
       rethrow;

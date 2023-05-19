@@ -25,4 +25,13 @@ class MatchesNotifier extends StateNotifier<MatchesState> {
       (r) => state = state.copyWith(matches: AsyncState.success(r)),
     );
   }
+
+  Future<void> getMatch(String id) async {
+    state = state.copyWith(match: const AsyncState.loading());
+    final res = await matchesRepository.getMatch(id);
+    res.fold(
+      (l) => state = state.copyWith(match: AsyncState.error(l)),
+      (r) => state = state.copyWith(match: AsyncState.success(r)),
+    );
+  }
 }
