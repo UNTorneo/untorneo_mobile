@@ -92,7 +92,7 @@ class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
   void _onUniteHandle() {
     ref.read(clanProvider.notifier).addUserToClan(
           int.parse(widget.clanId),
-          3,//ref.read(authProvider).authModel.data!.user.id,
+          ref.read(authProvider).authModel.data!.user.id,
         );
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(clanProvider.notifier).getUsersByClanById(int.parse(widget.clanId));
