@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untorneo_mobile/core/validators/text_form_validator.dart';
-import 'package:untorneo_mobile/widgets/text_field/date_text_field.dart';
 import 'package:untorneo_mobile/widgets/widgets/custom_text_field.dart';
 
 class MyProfileScreen extends ConsumerStatefulWidget {
