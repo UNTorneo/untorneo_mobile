@@ -91,13 +91,13 @@ class ClanDataSourceImpl implements ClanDataSource {
       rethrow;
     }
   }
-  
+
   @override
   Future<List<UserModel>> getUsersByClanId(clanId) async {
     try {
       final options = QueryOptions(
         document: gql(ClanQuerys.getUsersByClanId),
-        variables: {'calnId' : clanId},
+        variables: {'clanIdToFind': clanId},
       );
       final res = await gqlHandler.queryList(options, 'usersByClanId');
       Logger.log('**************************************************');

@@ -24,6 +24,7 @@ class UserCard extends ConsumerWidget {
         children: [
           Text(user.name, style: theme.titleLarge),
           const Divider(),
+          Text(user.isActive ? 'Activo' : 'No Activo'),
           const SizedBox(height: 10),
         ],
       ),
