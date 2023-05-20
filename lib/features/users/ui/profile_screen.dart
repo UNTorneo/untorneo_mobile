@@ -42,10 +42,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   Row(
                     children: <Widget>[
                       Expanded(
-                          child: CircleAvatar(
-                        radius: 60,
-                        child: Text('PHOTO'),
-                      )),
+                        child: CircleAvatar(
+                          radius: 60,
+                          child: Text('PHOTO'),
+                        ),
+                      ),
                     ],
                   ),
                   SizedBox(height: 10),
@@ -56,12 +57,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         Text(
                           'Juan Contreras',
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w700),
+                            fontSize: 16, fontWeight: FontWeight.w700,
+                          ),
                         ),
                         Text(
                           'Clan del Usuario',
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w700),
+                            fontSize: 16, fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ],
                     ),
@@ -83,12 +86,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             Text(
                               'Nombre de usuario',
                               style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.w700),
+                                fontSize: 12, fontWeight: FontWeight.w700,
+                              ),
                             ),
                             Text(
                               'juanito2504',
                               style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w400),
+                                fontSize: 14, fontWeight: FontWeight.w400,
+                              ),
                             ),
                           ],
                         ),
@@ -112,12 +117,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             Text(
                               'Fecha de nacimiento',
                               style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.w700),
+                                fontSize: 12, fontWeight: FontWeight.w700,
+                              ),
                             ),
                             Text(
                               '2000-04-25',
                               style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w400),
+                                fontSize: 14, fontWeight: FontWeight.w400,
+                              ),
                             ),
                           ],
                         ),
@@ -141,12 +148,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             Text(
                               'Correo electrónico',
                               style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.w700),
+                                fontSize: 12, fontWeight: FontWeight.w700,
+                              ),
                             ),
                             Text(
                               'juan@contreras.com',
                               style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w400),
+                                fontSize: 14, fontWeight: FontWeight.w400,
+                              ),
                             ),
                           ],
                         ),
@@ -170,12 +179,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             Text(
                               'País',
                               style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.w700),
+                                fontSize: 12, fontWeight: FontWeight.w700,
+                              ),
                             ),
                             Text(
                               'Colombia',
                               style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w400),
+                                fontSize: 14, fontWeight: FontWeight.w400,
+                              ),
                             ),
                           ],
                         ),
@@ -199,12 +210,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             Text(
                               'Ciudad',
                               style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.w700),
+                                fontSize: 12, fontWeight: FontWeight.w700,
+                              ),
                             ),
                             Text(
                               'Ibagué',
                               style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w400),
+                                fontSize: 14, fontWeight: FontWeight.w400,
+                              ),
                             ),
                           ],
                         ),
