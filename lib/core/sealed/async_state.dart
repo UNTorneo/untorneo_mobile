@@ -85,8 +85,8 @@ extension AsyncExtension<T> on AsyncState<T> {
   }
 
   Widget when({
-    required Widget Function(T) onData,
-    required Widget Function(Failure) onError,
+    required Widget Function(T data) onData,
+    required Widget Function(Failure failure) onError,
     Widget Function()? onLoading,
     Widget Function()? onInitial,
   }) {

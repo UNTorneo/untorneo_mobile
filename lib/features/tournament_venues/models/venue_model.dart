@@ -7,10 +7,10 @@ class Venue extends Equatable {
 
   factory Venue.fromMap(Map<String, dynamic> map) {
     return Venue(
-      id: map['id'],
-      location: map['location'],
-      description: map['description'],
-      isActive: map['isActive'],
+      id: map['id'] as int,
+      location: map['location'] as String,
+      description: map['description'] as String,
+      isActive: map['isActive'] as bool,
     );
   }
 
@@ -56,7 +56,6 @@ class Venue extends Equatable {
 
   Map<String, dynamic> toMap() {
     return {
-      'id' : id,
       'location' : location,
       'description' : description,
       'isActive' : isActive

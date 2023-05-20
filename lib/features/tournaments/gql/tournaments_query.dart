@@ -4,11 +4,6 @@ final class TournamentQuery {
       getTournaments {
         id
         name
-        teams
-        sportId
-        modeId
-        clanId
-        venueId
         venueName
         access
         status
@@ -23,7 +18,9 @@ final class TournamentQuery {
       getTournament(id: $getTournamentId) {
         id
         name
-        teams
+        teams {
+          name
+        }
         sportId {
           _id
           name

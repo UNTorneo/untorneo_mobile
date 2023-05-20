@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untorneo_mobile/core/failure/failure.dart';
 import 'package:untorneo_mobile/core/sealed/either.dart';
 import 'package:untorneo_mobile/features/matches/datasources/matches_datasource.dart';
+import 'package:untorneo_mobile/features/matches/models/match_model.dart';
 import 'package:untorneo_mobile/features/matches/models/matches_model.dart';
 
 final matchesRepositoryProvider =
@@ -9,6 +10,7 @@ final matchesRepositoryProvider =
 
 abstract class MatchesRepository {
   Future<Either<Failure, List<MatchesModel>>> getMatches();
+  Future<Either<Failure, MatchModel>> getMatch(String id);
 }
 
 class MatchesRepositoryImpl implements MatchesRepository {
@@ -24,6 +26,16 @@ class MatchesRepositoryImpl implements MatchesRepository {
   Future<Either<Failure, List<MatchesModel>>> getMatches() async {
     try {
       final res = await datasource.getMatches();
+      return Right(res);
+    } catch (e) {
+      return Left(Failure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, MatchModel>> getMatch(String id) async {
+    try {
+      final res = await datasource.getMatch(id);
       return Right(res);
     } catch (e) {
       return Left(Failure(e.toString()));

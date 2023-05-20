@@ -6,15 +6,26 @@ class VenueState extends Equatable {
   const VenueState({
     required this.venueById,
     required this.venues,
+    required this.venueCreated,
   });
+
+  factory VenueState.initial() {
+    return const VenueState(
+      venueById: AsyncState.initial(),
+      venues: AsyncState.initial(),
+      venueCreated: AsyncState.initial(),
+    );
+  }
 
   final AsyncState<Venue> venueById;
   final AsyncState<List<Venue>> venues;
+  final AsyncState<bool> venueCreated;
 
-  VenueState copyWith({AsyncState<Venue>? venueById, AsyncState<List<Venue>>? venues}) {
+  VenueState copyWith({AsyncState<Venue>? venueById, AsyncState<List<Venue>>? venues, AsyncState<bool>? venueCreated}) {
     return VenueState(
       venueById: venueById ?? this.venueById,
       venues: venues ?? this.venues,
+      venueCreated: venueCreated ?? this.venueCreated,
     );
   }
 

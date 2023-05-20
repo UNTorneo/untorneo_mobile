@@ -16,8 +16,8 @@ class VenueProvider extends StateNotifier<VenueState> {
     required this.venueRepository,
     required this.ref,
   }) : super(
-    const VenueState(venueById: AsyncState.initial(), venues: AsyncState.initial()),
-  );
+          const VenueState(venueById: AsyncState.initial(), venues: AsyncState.initial(), venueCreated: AsyncState.initial()),
+        );
 
   factory VenueProvider.fromRead(Ref ref) {
     final venueRepository = ref.read(venueRepositoryProvider);
@@ -35,25 +35,30 @@ class VenueProvider extends StateNotifier<VenueState> {
     state = state.copyWith(venueById: const AsyncState.loading());
     final result = await venueRepository.getVenueById(id);
     result.fold(
-      (l) => (failure) => state = state.copyWith(venueById: AsyncState.error(failure)), 
-      (r) => (newVenue) {
-        state = state.copyWith(
-          venueById: AsyncState.success(newVenue),
-        );
-      },
+      (l) => state = state.copyWith(venueById: AsyncState.error(l)),
+      (r) => state = state.copyWith(
+          venueById: AsyncState.success(r),
+        ),
     );
   }
 
   Future<void> getVenues() async {
     state = state.copyWith(venues: const AsyncState.loading());
     final result = await venueRepository.getVenues();
+    state = result.fold(
+      (l) => state.copyWith(venues: AsyncState.error(l)),
+      (r) => state.copyWith(
+        venues: AsyncState.success(r),
+      ),
+    );
+    state;
+  }
+
+  Future<void> addVenue(newVenue) async {
+    final result = await venueRepository.addVenue(newVenue);
     result.fold(
-      (l) => (failure) => state = state.copyWith(venues: AsyncState.error(failure)),
-      (r) => (newVenue) {
-        state = state.copyWith(
-          venues: AsyncState.success(r),
-        );
-      },
+      (l) => (failure) => state = state.copyWith(venueCreated: AsyncState.error(failure)),
+      (r) => state = state.copyWith(venueCreated: const AsyncState.success(true)),
     );
   }
 }

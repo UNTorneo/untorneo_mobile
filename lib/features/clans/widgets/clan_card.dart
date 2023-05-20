@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:untorneo_mobile/core/theme/theme.dart';
 import 'package:untorneo_mobile/features/clans/model/clan_model.dart';
-import 'package:untorneo_mobile/features/tournaments/ui/tournament_detail_screen.dart';
+import 'package:untorneo_mobile/features/clans/ui/clan_detail_screen.dart';
 
 class ClanCard extends ConsumerWidget {
   const ClanCard({
-    super.key, 
+    super.key,
     required this.clan,
   });
 
@@ -32,21 +32,19 @@ class ClanCard extends ConsumerWidget {
               children: [
                 const TextSpan(text: 'Creado el '),
                 TextSpan(
-                  text: clan.createdAt,
+                  text: clan.createdAt.substring(0, 9),
                   style: theme.titleMedium,
                 ),
               ],
             ),
           ),
           const SizedBox(height: 10),
-          /*
           FilledButton(
             onPressed: () => GoRouter.of(context).push(
-              '${TournamentDetailScreen.route}/${clan.id}',
+              '${ClanDetailScreen.route}/${clan.id}',
             ),
-            child: const Text('Ir al torneo'),
+            child: const Text('Ver'),
           ),
-          */
         ],
       ),
     );

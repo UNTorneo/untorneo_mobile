@@ -11,7 +11,7 @@ final class ClanQuerys {
   ''';
 
   static const getClanById = r'''
-    query clanById(id: $clanByIdId) {
+    query ClanById($clanByIdId: Int!) {
       clanById(id: $clanByIdId) {
         id
         leaderId
@@ -39,4 +39,5 @@ final class ClanQuerys {
       }
     }
   ''';
+  
 }

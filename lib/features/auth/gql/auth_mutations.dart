@@ -13,14 +13,28 @@ final class AuthMutations {
   ''';
   static const login = r'''
     mutation Login($email: String!, $password: String!) {
-      login(email: $email, password: $password) {
-        ... on RequestToken {
-          accessToken
-        }
-        ... on ErrorResponse {
-          error
+    login(email: $email, password: $password) {
+      ... on RequestToken {
+        accessToken
+        user {
+          id
+          name
+          lastName
+          username
+          birthday
+          email
+          countryId
+          cityId
+          latitude
+          longitude
+          isActive
+          photoUrl
         }
       }
+      ... on ErrorResponse {
+        error
+      }
     }
+  }
   ''';
 }

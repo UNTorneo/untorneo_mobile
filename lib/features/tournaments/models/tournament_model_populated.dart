@@ -20,7 +20,7 @@ class TournamentVenuePopulated extends Equatable {
       TournamentVenuePopulated(
         id: json['id'],
         name: json['name'],
-        teams: List<String>.from(json['teams'].map((x) => x)),
+        teams: List<String>.from(json['teams'].map((x) => x['name'])),
         sport: TournamentSport.fromJson(json['sportId']),
         mode: TournamentMode.fromJson(json['modeId']),
         clan: TournamentClan.fromJson(json['clanId']),

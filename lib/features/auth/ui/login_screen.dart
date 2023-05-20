@@ -8,7 +8,7 @@ import 'package:untorneo_mobile/core/validators/text_form_validator.dart';
 import 'package:untorneo_mobile/features/auth/models/login_model.dart';
 import 'package:untorneo_mobile/features/auth/state/auth_provider.dart';
 import 'package:untorneo_mobile/features/auth/ui/sign_up_screen.dart';
-import 'package:untorneo_mobile/widgets/loading/screen_loading_widget.dart';
+import 'package:untorneo_mobile/widgets/loading/loading_widget.dart';
 import 'package:untorneo_mobile/widgets/widgets/custom_text_field.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -81,7 +81,7 @@ class _AuthScreenState extends ConsumerState<LoginScreen> {
                   child: authState.authModel.isLoading
                       ? const FilledButton(
                           onPressed: null,
-                          child: ScreenLoadingWidget(),
+                          child: LoadingWidget(),
                         )
                       : FilledButton(
                           onPressed: _onLogin,

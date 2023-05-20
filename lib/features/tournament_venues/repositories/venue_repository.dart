@@ -11,22 +11,23 @@ final venueRepositoryProvider = Provider<VenueRepository>((ref) {
 abstract class VenueRepository {
   Future<Either<Failure, List<Venue>>> getVenues();
   Future<Either<Failure, Venue>> getVenueById(id);
+  Future<Either<Failure, void>> addVenue(newvenue);
 }
 
 class VenueRepositoryImpl implements VenueRepository {
-  VenueRepositoryImpl(this.ordersDataSource);
+  VenueRepositoryImpl(this.venueDataSource);
 
   factory VenueRepositoryImpl.fromRef(Ref ref) {
     final venueDataSource = ref.read(venueDataSourceProvider);
     return VenueRepositoryImpl(venueDataSource);
   }
 
-  final VenueDataSource ordersDataSource;
+  final VenueDataSource venueDataSource;
   
   @override
   Future<Either<Failure, Venue>> getVenueById(id) async {
     try {
-      final res = await ordersDataSource.getVenueById(id);
+      final res = await venueDataSource.getVenueById(id);
       return Right(res);
     } catch (e) {
       return Left(Failure(e.toString()));
@@ -36,7 +37,17 @@ class VenueRepositoryImpl implements VenueRepository {
   @override
   Future<Either<Failure, List<Venue>>> getVenues() async {
     try {
-      final res = await ordersDataSource.getVenues();
+      final res = await venueDataSource.getVenues();
+      return Right(res);
+    } catch (e) {
+      return Left(Failure(e.toString()));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, void>> addVenue(newVenue) async {
+    try {
+      final res = await venueDataSource.addVenue(newVenue);
       return Right(res);
     } catch (e) {
       return Left(Failure(e.toString()));

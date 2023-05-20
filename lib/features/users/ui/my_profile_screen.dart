@@ -40,7 +40,7 @@ class _MyProfileScreenState extends ConsumerState<MyProfileScreen> {
                       child: CircleAvatar(
                       radius: 60,
                       child: Text('PHOTO'),
-                    )
+                    ),
                     ),
                   ],
                 ),

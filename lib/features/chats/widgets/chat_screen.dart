@@ -43,7 +43,6 @@ class _ChatScreen extends ConsumerState<ChatScreen> {
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisSize: MainAxisSize.max,
             children: [
               Container(
                 margin: const EdgeInsets.only(right: 4),
@@ -67,7 +66,7 @@ class _ChatScreen extends ConsumerState<ChatScreen> {
                 textCapitalization: TextCapitalization.sentences,
                 decoration: const InputDecoration(hintText: 'Envía un mensaje'),
                 onSubmitted: (value) {},
-              )),
+              ),),
               Container(
                 margin: const EdgeInsets.only(left: 4),
                 decoration: BoxDecoration(

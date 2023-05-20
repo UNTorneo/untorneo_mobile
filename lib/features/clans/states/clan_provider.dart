@@ -16,8 +16,8 @@ class ClanProvider extends StateNotifier<ClanState> {
     required this.clanRepository,
     required this.ref,
   }) : super(
-    const ClanState(clanById: AsyncState.initial(), clans: AsyncState.initial()),
-  );
+          const ClanState(clanById: AsyncState.initial(), clans: AsyncState.initial(), userAdded: AsyncState.initial(), users: AsyncState.initial()),
+        );
 
   factory ClanProvider.fromRead(Ref ref) {
     final clanRepository = ref.read(clanRepositoryProvider);
@@ -34,13 +34,9 @@ class ClanProvider extends StateNotifier<ClanState> {
     if (id <= 0) return;
     state = state.copyWith(clanById: const AsyncState.loading());
     final result = await clanRepository.getClanById(id);
-    result.fold(
-      (l) => (failure) => state = state.copyWith(clanById: AsyncState.error(failure)),
-      (r) => (newClan) {
-        state = state.copyWith(
-          clanById: AsyncState.success(newClan),
-        );
-      },
+    state = result.fold(
+      (failure) => state.copyWith(clanById: AsyncState.error(failure)),
+      (newClan) => state.copyWith(clanById: AsyncState.success(newClan)),
     );
   }
 
@@ -48,12 +44,35 @@ class ClanProvider extends StateNotifier<ClanState> {
     state = state.copyWith(clans: const AsyncState.loading());
     final result = await clanRepository.getClans();
     result.fold(
+      (l) => state = state.copyWith(clans: AsyncState.error(l)),
+      (r) => state = state.copyWith(
+        clans: AsyncState.success(r),
+      ),
+    );
+  }
+
+  Future<void> getUsersByClanById(clanId) async {
+    state = state.copyWith(users: const AsyncState.loading());
+    final result = await clanRepository.getUsersByClanId(clanId);
+    result.fold(
+      (l) => state = state.copyWith(users: AsyncState.error(l)),
+      (r) => state = state.copyWith(users: AsyncState.success(r)),
+    );
+  }
+
+  Future<void> createClan(leaderId, name, createdAt) async {
+    final result = await clanRepository.createClan(leaderId, name, createdAt);
+    result.fold(
       (l) => (failure) => state = state.copyWith(clans: AsyncState.error(failure)),
-      (r) => (clans) {
-        state = state.copyWith(
-          clans: AsyncState.success(r),
-        );
-      },
+      (r) => null,
+    );
+  }
+
+  Future<void> addUserToClan(clanId, userId) async {
+    final result = await clanRepository.addUserToClan(clanId, userId);
+    result.fold(
+      (l) => state = state.copyWith(userAdded: AsyncState.error(l)), 
+      (r) => state = state.copyWith(userAdded: const AsyncState.success(true)),
     );
   }
 }
