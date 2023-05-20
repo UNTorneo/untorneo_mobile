@@ -9,7 +9,8 @@ class MyProfileScreen extends ConsumerStatefulWidget {
   static const route = '/myprofile';
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _MyProfileScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _MyProfileScreenState();
 }
 
 class _MyProfileScreenState extends ConsumerState<MyProfileScreen> {
@@ -23,7 +24,6 @@ class _MyProfileScreenState extends ConsumerState<MyProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Perfil')),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -38,9 +38,9 @@ class _MyProfileScreenState extends ConsumerState<MyProfileScreen> {
                   children: <Widget>[
                     Expanded(
                       child: CircleAvatar(
-                      radius: 60,
-                      child: Text('PHOTO'),
-                    ),
+                        radius: 60,
+                        child: Text('PHOTO'),
+                      ),
                     ),
                   ],
                 ),
@@ -51,11 +51,17 @@ class _MyProfileScreenState extends ConsumerState<MyProfileScreen> {
                     children: [
                       Text(
                         'Valentina Colmenares',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                       Text(
                         'Clan del Usuario',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ],
                   ),

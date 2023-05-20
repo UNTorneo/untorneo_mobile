@@ -6,6 +6,7 @@ import 'package:untorneo_mobile/features/clans/ui/clans_screen.dart';
 import 'package:untorneo_mobile/features/matches/ui/matches_home_screen.dart';
 import 'package:untorneo_mobile/features/tournament_venues/ui/tournament_venues_home_screen.dart';
 import 'package:untorneo_mobile/features/tournaments/ui/tournaments_home_screen.dart';
+import 'package:untorneo_mobile/features/users/ui/my_profile_screen.dart';
 
 class IndexHomeScreen extends ConsumerStatefulWidget {
   const IndexHomeScreen({super.key});
@@ -69,7 +70,7 @@ class _IndexHomeScreenState extends ConsumerState<IndexHomeScreen> {
         TournamentHome(),
         MatchesHomeScreen(),
         ClansScreen(),
-        Center(child: Text('Mi perfil')),
+        MyProfileScreen(),
       ][_currentIndex],
     );
   }
