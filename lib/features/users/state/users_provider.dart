@@ -28,7 +28,7 @@ class UsersNotifier extends StateNotifier<UsersState>{
     );
   }
 
-  Future<void> getTournamentPopulated(String id) async {
+  Future<void> getUserById(int id) async {
     state =
         state.copyWith(user: const AsyncState.loading());
     final res = await usersRepository.getUser(id);
