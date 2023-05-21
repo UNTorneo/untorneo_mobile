@@ -1,7 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untorneo_mobile/core/external/gql_handler.dart';
 import 'package:untorneo_mobile/core/sealed/async_state.dart';
 import 'package:untorneo_mobile/core/sealed/either.dart';
+import 'package:untorneo_mobile/features/auth/state/auth_provider.dart';
 import 'package:untorneo_mobile/features/clans/repository/clan_respository.dart';
 import 'package:untorneo_mobile/features/clans/states/clan_state.dart';
 
@@ -16,7 +18,11 @@ class ClanProvider extends StateNotifier<ClanState> {
     required this.clanRepository,
     required this.ref,
   }) : super(
-          const ClanState(clanById: AsyncState.initial(), clans: AsyncState.initial(), userAdded: AsyncState.initial(), users: AsyncState.initial()),
+          const ClanState(
+              clanById: AsyncState.initial(),
+              clans: AsyncState.initial(),
+              userAdded: AsyncState.initial(),
+              users: AsyncState.initial()),
         );
 
   factory ClanProvider.fromRead(Ref ref) {
@@ -56,23 +62,37 @@ class ClanProvider extends StateNotifier<ClanState> {
     final result = await clanRepository.getUsersByClanId(clanId);
     result.fold(
       (l) => state = state.copyWith(users: AsyncState.error(l)),
-      (r) => state = state.copyWith(users: AsyncState.success(r)),
+      (r) => state = state.copyWith(
+        users: AsyncState.success(r),
+        isUserInClan: r.firstWhereOrNull(
+              (e) => ref.read(authProvider).authModel.data?.user.id == e.id,
+            ) !=
+            null,
+        userAdded: const AsyncState.success(true),
+      ),
     );
   }
 
   Future<void> createClan(leaderId, name, createdAt) async {
     final result = await clanRepository.createClan(leaderId, name, createdAt);
     result.fold(
-      (l) => (failure) => state = state.copyWith(clans: AsyncState.error(failure)),
+      (l) => (failure) => state = state.copyWith(
+            clans: AsyncState.error(failure),
+          ),
       (r) => null,
     );
   }
 
   Future<void> addUserToClan(clanId, userId) async {
-    final result = await clanRepository.addUserToClan(clanId, userId);
-    result.fold(
-      (l) => state = state.copyWith(userAdded: AsyncState.error(l)), 
-      (r) => state = state.copyWith(userAdded: const AsyncState.success(true)),
+    state = state.copyWith(
+      users: const AsyncState.loading(),
+      userAdded: const AsyncState.loading(),
     );
+    final result = await clanRepository.addUserToClan(clanId, userId);
+    state = result.fold(
+      (l) => state.copyWith(userAdded: AsyncState.error(l)),
+      (r) => state.copyWith(userAdded: const AsyncState.success(true)),
+    );
+    await getUsersByClanById(clanId);
   }
 }
