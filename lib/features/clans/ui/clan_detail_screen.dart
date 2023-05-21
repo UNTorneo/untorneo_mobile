@@ -24,10 +24,13 @@ class ClanDetailScreen extends ConsumerStatefulWidget {
 }
 
 class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
+  bool isUserInClan = false;
+  final _scrollController = ScrollController();
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(clanProvider.notifier).getClanById(id: int.tryParse(widget.clanId)!);
+      ref.read(clanProvider.notifier).getClanById(id: int.parse(widget.clanId));
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(clanProvider.notifier).getUsersByClanById(int.parse(widget.clanId));
@@ -40,14 +43,15 @@ class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
     final theme = Theme.of(context).textTheme;
     final clanState = ref.watch(clanProvider);
     final userState = ref.watch(usersProvider);
-    return clanState.clanById.on(
+    return Scaffold(
+      appBar: AppBar(title: const Text('Clan')),
+      body: clanState.clanById.on(
       onError: (error) => ErrorScreen(error: error.message),
-      onInitial: () => const Scaffold(body: ScreenLoadingWidget()),
-      onLoading: () => const Scaffold(body: ScreenLoadingWidget()),
+      onInitial: () => const LoadingWidget(),
+      onLoading: () => const ScreenLoadingWidget(),
       onData: (data) {
-        return Scaffold(
-          appBar: AppBar(title: Text(data.name)),
-          body: Column(
+          return Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Text('Líder', style: theme.titleLarge, textAlign: TextAlign.start),
               userState.user.on(
@@ -57,45 +61,36 @@ class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     ref.read(usersProvider.notifier).getUserById(data.leaderId);
                   });
-                  return const LoadingWidget();
+                  return const ScreenLoadingWidget();
                 },
-                onLoading: () => const LoadingScreen(),
+                onLoading: () => const ScreenLoadingWidget(),
               ),
               const SizedBox(height: 12),
               Text('Creado el', style: theme.titleMedium),
               Text(data.createdAt.substring(0, 9), style: theme.bodyMedium),
-              const SizedBox(height: 12),
+              const SizedBox(height: 20),
               Text(
                 'Miembros',
                 style: theme.titleMedium,
                 textAlign: TextAlign.start,
               ),
-              const SizedBox(height: 12),
               Expanded(
                 child: Scrollbar(
+                  controller: _scrollController,
                   child: clanState.users.on(
-                    onData: (data) => Column(
-                      children: [
-                        ListView.builder(
-                          padding: const EdgeInsets.all(16),
-                          itemCount: data.length,
-                          itemBuilder: (context, index) => UserCard(user: data[index]),
-                        ),
-                        data.contains(ref.read(authProvider).authModel.data!.user)
-                            ? FloatingActionButton.extended(
-                                label: const Text('Únete'),
-                                icon: const Icon(Icons.group_add),
-                                onPressed: _onUniteHandle,
-                              )
-                            : FloatingActionButton.extended(
-                                label: const Text('Salir'),
-                                icon: const Icon(Icons.group_remove),
-                                onPressed: _onUniteHandle,
-                              ),
-                      ],
-                    ),
+                    onData: (data) {
+                      isUserInClan = data.contains(ref.read(authProvider).authModel.data!.user);
+                      return data.isNotEmpty
+                          ? ListView.builder(
+                              controller: _scrollController,
+                              padding: const EdgeInsets.all(16),
+                              itemCount: data.length,
+                              itemBuilder: (context, index) => UserCard(user: data[index]),
+                            )
+                          : const Text('No hay miembros');
+                    },
                     onError: (error) => ErrorScreen(error: error.message),
-                    onLoading: () => const Scaffold(body: ScreenLoadingWidget()),
+                    onLoading: () => const ScreenLoadingWidget(),
                     onInitial: () {
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         ref
@@ -108,12 +103,26 @@ class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
                 ),
               ),
               const SizedBox(
-                height: 20,
-              )
+                height: 10,
+              ),
+              isUserInClan
+                  ? FloatingActionButton.extended(
+                      onPressed: _onUniteHandle,
+                      label: const Text('Únete'),
+                      icon: const Icon(Icons.group_add),
+                    )
+                  : FloatingActionButton.extended(
+                      onPressed: _onUniteHandle,
+                      label: const Text('Salir'),
+                      icon: const Icon(Icons.group_remove),
+                    ),
+              const SizedBox(
+                height: 10,
+              ),
             ],
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
