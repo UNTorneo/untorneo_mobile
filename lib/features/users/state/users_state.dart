@@ -2,7 +2,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:untorneo_mobile/core/sealed/async_state.dart';
 import 'package:untorneo_mobile/features/users/models/users_base_model.dart';
-import 'package:untorneo_mobile/features/users/models/users_model.dart';
+import 'package:untorneo_mobile/features/users/models/user_model.dart';
 
 final class UsersState extends Equatable {
   const UsersState({

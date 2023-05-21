@@ -4,7 +4,7 @@ import 'package:untorneo_mobile/core/external/gql_handler.dart';
 import 'package:untorneo_mobile/core/logger/logger.dart';
 import 'package:untorneo_mobile/features/users/gql/users_querys.dart';
 import 'package:untorneo_mobile/features/users/models/users_base_model.dart';
-import 'package:untorneo_mobile/features/users/models/users_model.dart';
+import 'package:untorneo_mobile/features/users/models/user_model.dart';
 
 final usersDatasourceProvider =
     Provider<UsersDatasource>(UsersDatasourceImpl.fromRef);

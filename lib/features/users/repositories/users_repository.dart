@@ -3,7 +3,7 @@ import 'package:untorneo_mobile/core/failure/failure.dart';
 import 'package:untorneo_mobile/core/sealed/either.dart';
 import 'package:untorneo_mobile/features/users/datasources/users_datasource.dart';
 import 'package:untorneo_mobile/features/users/models/users_base_model.dart';
-import 'package:untorneo_mobile/features/users/models/users_model.dart';
+import 'package:untorneo_mobile/features/users/models/user_model.dart';
 
 final usersRepositoryProvider = Provider<UsersRepository>(UsersRepositoryImpl.fromRef);
 

@@ -51,8 +51,7 @@ class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
             children: [
               Text('Líder', style: theme.titleLarge, textAlign: TextAlign.start),
               userState.user.on(
-                onData: (user) =>
-                    Text(user.username, style: theme.titleMedium, textAlign: TextAlign.start),
+                onData: (user) => Text(user.username, textAlign: TextAlign.start),
                 onError: (error) => Text(error.message),
                 onInitial: () {
                   WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -82,17 +81,17 @@ class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
                           itemCount: data.length,
                           itemBuilder: (context, index) => UserCard(user: data[index]),
                         ),
-                        data.contains(ref.read(authProvider).authModel.data!.user) ?
-                        FloatingActionButton.extended(
-                          label: const Text('Únete'),
-                          icon: const Icon(Icons.group_add),
-                          onPressed: _onUniteHandle,
-                        )
-                        : FloatingActionButton.extended(
-                          label: const Text('Salir'),
-                          icon: const Icon(Icons.group_remove),
-                          onPressed: _onUniteHandle,
-                        ),
+                        data.contains(ref.read(authProvider).authModel.data!.user)
+                            ? FloatingActionButton.extended(
+                                label: const Text('Únete'),
+                                icon: const Icon(Icons.group_add),
+                                onPressed: _onUniteHandle,
+                              )
+                            : FloatingActionButton.extended(
+                                label: const Text('Salir'),
+                                icon: const Icon(Icons.group_remove),
+                                onPressed: _onUniteHandle,
+                              ),
                       ],
                     ),
                     onError: (error) => ErrorScreen(error: error.message),
