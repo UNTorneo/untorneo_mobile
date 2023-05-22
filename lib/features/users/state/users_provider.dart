@@ -4,14 +4,12 @@ import 'package:untorneo_mobile/core/sealed/either.dart';
 import 'package:untorneo_mobile/features/users/repositories/users_repository.dart';
 import 'package:untorneo_mobile/features/users/state/users_state.dart';
 
-final usersProvider =
-    StateNotifierProvider<UsersNotifier, UsersState>(
-      UsersNotifier.fromRef,
+final usersProvider = StateNotifierProvider<UsersNotifier, UsersState>(
+  UsersNotifier.fromRef,
 );
 
-class UsersNotifier extends StateNotifier<UsersState>{
-  UsersNotifier(this.usersRepository) 
-      : super(UsersState.initial());
+class UsersNotifier extends StateNotifier<UsersState> {
+  UsersNotifier(this.usersRepository) : super(UsersState.initial());
 
   factory UsersNotifier.fromRef(Ref ref) {
     return UsersNotifier(ref.read(usersRepositoryProvider));
@@ -28,16 +26,12 @@ class UsersNotifier extends StateNotifier<UsersState>{
     );
   }
 
-  Future<void> getTournamentPopulated(String id) async {
-    state =
-        state.copyWith(user: const AsyncState.loading());
+  Future<void> getUser(String id) async {
+    state = state.copyWith(user: const AsyncState.loading());
     final res = await usersRepository.getUser(id);
     res.fold(
-      (l) =>
-          state = state.copyWith(user: AsyncState.error(l)),
-      (r) => state =
-          state.copyWith(user: AsyncState.success(r)),
+      (l) => state = state.copyWith(user: AsyncState.error(l)),
+      (r) => state = state.copyWith(user: AsyncState.success(r)),
     );
   }
-
 }
