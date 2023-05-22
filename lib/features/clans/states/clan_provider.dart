@@ -22,7 +22,7 @@ class ClanProvider extends StateNotifier<ClanState> {
               clanById: AsyncState.initial(),
               clans: AsyncState.initial(),
               userAdded: AsyncState.initial(),
-              users: AsyncState.initial()),
+              users: AsyncState.initial(),),
         );
 
   factory ClanProvider.fromRead(Ref ref) {
