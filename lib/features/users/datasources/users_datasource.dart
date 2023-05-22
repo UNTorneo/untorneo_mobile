@@ -13,7 +13,7 @@ final usersDatasourceProvider =
 abstract class UsersDatasource {
   Future<List<UserBaseModel>>getUsers();
   Future<UserModel> getUser(
-    String userId,
+    int userId,
   );
 }
 
@@ -46,14 +46,14 @@ class UsersDatasourceImpl implements UsersDatasource {
   
   @override
   Future<UserModel> getUser(
-    String userId,
+    int userId,
   ) async {
     try {
       final options = QueryOptions(
         document: gql(UserQuery.getUser),
-        variables: {'getUserId': userId},
+        variables: {'userId': userId},
       );
-      final res = await gqlHandler.query(options, 'getUser');
+      final res = await gqlHandler.query(options, 'user');
       return UserModel.fromJson(res);
     } catch (e, s) {
       Logger.logError(e.toString(), s);

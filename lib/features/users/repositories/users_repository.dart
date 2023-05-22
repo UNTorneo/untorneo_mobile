@@ -5,13 +5,12 @@ import 'package:untorneo_mobile/features/users/datasources/users_datasource.dart
 import 'package:untorneo_mobile/features/users/models/users_base_model.dart';
 import 'package:untorneo_mobile/features/users/models/user_model.dart';
 
-final usersRepositoryProvider =
-    Provider<UsersRepository>(UsersRepositoryImpl.fromRef);
+final usersRepositoryProvider = Provider<UsersRepository>(UsersRepositoryImpl.fromRef);
 
 abstract class UsersRepository {
   Future<Either<Failure, List<UserBaseModel>>> getUsers();
   Future<Either<Failure, UserModel>> getUser(
-    String userId,
+    int userId,
   );
 }
 
@@ -23,7 +22,7 @@ class UsersRepositoryImpl implements UsersRepository {
       ref.read(usersDatasourceProvider),
     );
   }
-  
+
   final UsersDatasource datasource;
 
   @override
@@ -38,7 +37,7 @@ class UsersRepositoryImpl implements UsersRepository {
 
   @override
   Future<Either<Failure, UserModel>> getUser(
-    String userId,
+    int userId,
   ) async {
     try {
       final res = await datasource.getUser(userId);
@@ -47,5 +46,4 @@ class UsersRepositoryImpl implements UsersRepository {
       return Left(Failure(e.toString()));
     }
   }
-
 }

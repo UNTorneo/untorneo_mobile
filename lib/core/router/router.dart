@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:untorneo_mobile/core/sealed/async_state.dart';
 import 'package:untorneo_mobile/features/auth/state/auth_provider.dart';
 import 'package:untorneo_mobile/features/auth/ui/login_screen.dart';
+import 'package:untorneo_mobile/features/clans/ui/clans_screen.dart';
 import 'package:untorneo_mobile/features/users/ui/my_profile_screen.dart';
 import 'package:untorneo_mobile/features/users/ui/profile_screen.dart';
 import 'package:untorneo_mobile/features/auth/ui/sign_up_screen.dart';
@@ -81,6 +82,12 @@ class CustomRouter extends Notifier<void> implements Listenable {
         return ClanDetailScreen(
           clanId: id,
         );
+      },
+    ),
+    GoRoute(
+      path: ClansScreen.route,
+      builder: (context, state) {
+        return const ClansScreen();
       },
     ),
   ];

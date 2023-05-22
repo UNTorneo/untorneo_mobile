@@ -33,15 +33,13 @@ class _ClansScreen extends ConsumerState<ClansScreen> {
   @override
   Widget build(BuildContext context) {
     final clanState = ref.watch(clanProvider);
-    return Scaffold(
-      appBar: AppBar(title: const Text('Clanes')),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const SizedBox(height: 20),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Flexible(
@@ -61,39 +59,39 @@ class _ClansScreen extends ConsumerState<ClansScreen> {
               )
             ],
           ),
-          Expanded(
-            child: Scrollbar(
-              controller: _scrollController,
-              child: clanState.clans.on(
-                onData: (data) => data.isNotEmpty
-                    ? ListView.builder(
-                        controller: _scrollController,
-                        itemCount: data.length,
-                        itemBuilder: (context, index) =>
-                            ClanCard(clan: data[index]),
-                      )
-                    : const Text('No hay ningún clan'),
-                onError: (error) => Text(error.message),
-                onLoading: () => const ScreenLoadingWidget(),
-                onInitial: () {
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    ref.read(clanProvider.notifier).getClans();
-                  });
-                  return const ScreenLoadingWidget();
-                },
-              ),
+        ),
+        Expanded(
+          child: Scrollbar(
+            controller: _scrollController,
+            child: clanState.clans.on(
+              onData: (data) => data.isNotEmpty
+                  ? ListView.builder(
+                      controller: _scrollController,
+                      itemCount: data.length,
+                      itemBuilder: (context, index) =>
+                          ClanCard(clan: data[index]),
+                    )
+                  : const Text('No hay ningún clan'),
+              onError: (error) => Text(error.message),
+              onLoading: () => const ScreenLoadingWidget(),
+              onInitial: () {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  ref.read(clanProvider.notifier).getClans();
+                });
+                return const ScreenLoadingWidget();
+              },
             ),
           ),
-          FloatingActionButton.extended(
-            label: const Text('Crear'),
-            onPressed: () {
-              CreateClanFormBottomSheet.show(context: context);
-            },
-            icon: const Icon(Icons.add),
-          ),
-          const SizedBox(height: 10),
-        ],
-      ),
+        ),
+        FloatingActionButton.extended(
+          label: const Text('Crear'),
+          onPressed: () {
+            CreateClanFormBottomSheet.show(context: context);
+          },
+          icon: const Icon(Icons.add),
+        ),
+        const SizedBox(height: 10),
+      ],
     );
   }
 

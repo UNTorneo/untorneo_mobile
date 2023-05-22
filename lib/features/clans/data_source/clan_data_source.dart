@@ -11,7 +11,7 @@ import 'package:untorneo_mobile/features/users/models/user_model.dart';
 final clanDataSourceProvider = Provider<ClanDataSource>(ClanDataSourceImpl.fromRef);
 
 abstract class ClanDataSource {
-  Future<Clan> getClanById(int venueId);
+  Future<Clan> getClanById(int clanId);
   Future<List<Clan>> getClans();
   Future<List<UserModel>> getUsersByClanId(clanId);
   Future<void> createClan(leaderId, name, createdAt);
