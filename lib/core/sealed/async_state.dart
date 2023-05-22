@@ -103,11 +103,11 @@ extension AsyncExtension<T> on AsyncState<T> {
     }
   }
 
-  Widget whenOrNull({
-    required Widget Function(T?) onData,
-    required Widget Function(Failure) onError,
-    Widget Function()? onLoading,
-    Widget Function()? onInitial,
+  Widget? whenOrNull({
+    required Widget? Function(T?) onData,
+    required Widget? Function(Failure) onError,
+    Widget? Function()? onLoading,
+    Widget? Function()? onInitial,
   }) {
     if (this is AsyncLoading) {
       return onLoading?.call() ?? const LoadingWidget();

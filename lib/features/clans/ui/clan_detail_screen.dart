@@ -47,7 +47,6 @@ class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
         return Scaffold(
           appBar: AppBar(title: const Text('Clan')),
           body: Column(
-            mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 'Líder',
@@ -69,7 +68,7 @@ class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
               const SizedBox(height: 12),
               Text('Creado el', style: theme.titleMedium),
               Text(data.createdAt.substring(0, 9), style: theme.bodyMedium),
-              const SizedBox(height: 20),
+              const SizedBox(height: 12),
               Text(
                 'Miembros',
                 style: theme.titleMedium,
@@ -83,7 +82,8 @@ class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
                       return data.isNotEmpty
                           ? ListView.builder(
                               controller: _scrollController,
-                              padding: const EdgeInsets.all(16),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
                               itemCount: data.length,
                               itemBuilder: (context, index) =>
                                   UserCard(user: data[index]),
@@ -99,13 +99,16 @@ class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
               const SizedBox(height: 10),
             ],
           ),
-          floatingActionButton: clanState.userAdded.when(
+          floatingActionButton: clanState.userAdded.whenOrNull(
             onError: (_) => const SizedBox.shrink(),
             onData: (_) => clanState.isUserInClan
-                ? FloatingActionButton.extended(
-                    onPressed: _onUniteHandle,
-                    label: const Text('Salir'),
-                    icon: const Icon(Icons.group_remove),
+                ? SizedBox(
+                    child: FilledButton(
+                      child: const Text('Crear torneo'),
+                      onPressed: () {
+                        //TODO: START TOURNAMENT
+                      },
+                    ),
                   )
                 : FloatingActionButton.extended(
                     onPressed: _onUniteHandle,
