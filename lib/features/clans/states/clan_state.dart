@@ -10,6 +10,7 @@ class ClanState extends Equatable {
     required this.userAdded,
     required this.users,
     this.isUserInClan = false,
+    this.selectedClan,
   });
 
   final AsyncState<Clan> clanById;
@@ -17,6 +18,7 @@ class ClanState extends Equatable {
   final AsyncState<bool> userAdded;
   final AsyncState<List<UserModel>> users;
   final bool isUserInClan;
+  final int? selectedClan;
 
   ClanState copyWith({
     AsyncState<Clan>? clanById,
@@ -24,6 +26,7 @@ class ClanState extends Equatable {
     AsyncState<bool>? userAdded,
     AsyncState<List<UserModel>>? users,
     bool? isUserInClan,
+    int? selectedClan,
   }) {
     return ClanState(
       clanById: clanById ?? this.clanById,
@@ -31,17 +34,19 @@ class ClanState extends Equatable {
       userAdded: userAdded ?? this.userAdded,
       users: users ?? this.users,
       isUserInClan: isUserInClan ?? this.isUserInClan,
+      selectedClan: selectedClan ?? this.selectedClan,
     );
   }
 
   @override
-  List<Object> get props {
+  List<Object?> get props {
     return [
       clanById,
       clans,
       userAdded,
       users,
       isUserInClan,
+      selectedClan,
     ];
   }
 }

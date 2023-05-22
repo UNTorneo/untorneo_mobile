@@ -6,6 +6,7 @@ import 'package:untorneo_mobile/core/sealed/async_state.dart';
 import 'package:untorneo_mobile/features/auth/state/auth_provider.dart';
 import 'package:untorneo_mobile/features/auth/ui/login_screen.dart';
 import 'package:untorneo_mobile/features/clans/ui/clans_screen.dart';
+import 'package:untorneo_mobile/features/tournaments/ui/create_tournament_screen.dart';
 import 'package:untorneo_mobile/features/users/ui/my_profile_screen.dart';
 import 'package:untorneo_mobile/features/users/ui/profile_screen.dart';
 import 'package:untorneo_mobile/features/auth/ui/sign_up_screen.dart';
@@ -115,6 +116,10 @@ class CustomRouter extends Notifier<void> implements Listenable {
         }
         return TournamentDetailScreen(tournamentId: id);
       },
+    ),
+    GoRoute(
+      path: CreateTournamentScreen.route,
+      builder: (context, state) => const CreateTournamentScreen(),
     ),
   ];
 

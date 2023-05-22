@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:untorneo_mobile/core/sealed/async_state.dart';
 import 'package:untorneo_mobile/features/auth/state/auth_provider.dart';
 import 'package:untorneo_mobile/features/clans/states/clan_provider.dart';
 import 'package:untorneo_mobile/features/clans/widgets/user_card.dart';
 import 'package:untorneo_mobile/features/error/error_screen.dart';
+import 'package:untorneo_mobile/features/tournaments/ui/create_tournament_screen.dart';
 import 'package:untorneo_mobile/features/users/state/users_provider.dart';
+import 'package:untorneo_mobile/widgets/loading/loading_widget.dart';
 import 'package:untorneo_mobile/widgets/loading/screen_loading_widget.dart';
 
 class ClanDetailScreen extends ConsumerStatefulWidget {
@@ -59,11 +62,11 @@ class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
                 onError: (error) => Text(error.message),
                 onInitial: () {
                   WidgetsBinding.instance.addPostFrameCallback((_) {
-                    ref.read(usersProvider.notifier).getUserById(data.leaderId);
+                    //ref.read(usersProvider.notifier).getUserById(data.leaderId);
                   });
-                  return const ScreenLoadingWidget();
+                  return const LoadingWidget();
                 },
-                onLoading: () => const ScreenLoadingWidget(),
+                onLoading: () => const LoadingWidget(),
               ),
               const SizedBox(height: 12),
               Text('Creado el', style: theme.titleMedium),
@@ -105,9 +108,8 @@ class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
                 ? SizedBox(
                     child: FilledButton(
                       child: const Text('Crear torneo'),
-                      onPressed: () {
-                        //TODO: START TOURNAMENT
-                      },
+                      onPressed: () => GoRouter.of(context)
+                          .push(CreateTournamentScreen.route),
                     ),
                   )
                 : FloatingActionButton.extended(
