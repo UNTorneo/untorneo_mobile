@@ -24,7 +24,16 @@ class ImageApi extends StatelessWidget {
       height: height,
       fit: fit,
       errorBuilder: (context, error, stackTrace) {
-        return const Text('Img error...');
+        if (errorImage != null) {
+          return Image.asset(
+            errorImage!,
+            width: width,
+            height: height,
+            fit: fit,
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
       },
       loadingBuilder: (context, child, loadingProgress) {
         if (loadingProgress == null) return child;
@@ -34,7 +43,8 @@ class ImageApi extends StatelessWidget {
           alignment: Alignment.center,
           child: CircularProgressIndicator.adaptive(
             value: loadingProgress.expectedTotalBytes != null
-                ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                ? loadingProgress.cumulativeBytesLoaded /
+                    loadingProgress.expectedTotalBytes!
                 : null,
           ),
         );
