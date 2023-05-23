@@ -39,6 +39,9 @@ final class GraphQLHandler {
       }
       final data = result.data![operation];
       if (data?[operation]?['error'] != null) {
+        throw data[operation]['error'];
+      }
+      if (data?['error'] != null) {
         throw data!['error'];
       }
       return data;
