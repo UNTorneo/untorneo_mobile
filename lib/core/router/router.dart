@@ -44,6 +44,7 @@ class CustomRouter extends Notifier<void> implements Listenable {
   bool isAuth = false;
 
   get routes => [
+        ...authRoutes,
         ...tournamentRoutes,
         ...userRoutes,
         ...venueRoutes,
@@ -63,14 +64,21 @@ class CustomRouter extends Notifier<void> implements Listenable {
           },
         ),
         GoRoute(
-          path: LoginScreen.route,
-          builder: (context, state) => const LoginScreen(),
-        ),
-        GoRoute(
           path: IndexHomeScreen.route,
           builder: (context, state) => const IndexHomeScreen(),
         ),
       ];
+
+  static final authRoutes = <RouteBase>[
+    GoRoute(
+      path: SignUpScreen.route,
+      builder: (context, state) => const SignUpScreen(),
+    ),
+    GoRoute(
+      path: LoginScreen.route,
+      builder: (context, state) => const LoginScreen(),
+    ),
+  ];
 
   static final clansRoutes = <RouteBase>[
     GoRoute(
@@ -140,10 +148,6 @@ class CustomRouter extends Notifier<void> implements Listenable {
 
   static final userRoutes = <RouteBase>[
     GoRoute(
-      path: SignUpScreen.route,
-      builder: (context, state) => const SignUpScreen(),
-    ),
-    GoRoute(
       path: ProfileDetailScreen.routeParams,
       builder: (context, state) {
         final id = state.pathParameters['id'];
@@ -163,8 +167,14 @@ class CustomRouter extends Notifier<void> implements Listenable {
     return 'Es necesario el parametro $atribute';
   }
 
+  List<String> unAuthenticatedRoutes = [
+    LoginScreen.route,
+    SignUpScreen.route,
+    ErrorScreen.route,
+  ];
+
   String? redirect(BuildContext context, GoRouterState state) {
-    final isLoggingIn = state.location == LoginScreen.route;
+    final isLoggingIn = unAuthenticatedRoutes.contains(state.location) ;
     if (isLoggingIn) {
       return isAuth ? IndexHomeScreen.route : null;
     }

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:untorneo_mobile/core/validators/text_form_validator.dart';
+import 'package:untorneo_mobile/features/auth/models/user_sign_up_model.dart';
+import 'package:untorneo_mobile/features/auth/state/auth_provider.dart';
+import 'package:untorneo_mobile/features/auth/ui/login_screen.dart';
 import 'package:untorneo_mobile/widgets/widgets/custom_text_field.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
@@ -183,6 +187,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     child: const Text('Registrarse'),
                   ),
                 ),
+                const SizedBox(height: 20),
               ],
             ),
           ),
@@ -191,7 +196,21 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     );
   }
 
-  void _onRegister() {
+  void _onRegister() async {
     if (!_formKey.currentState!.validate()) return;
+    final userRegistered = UserSignUpModel(
+        name: _nameController.text,
+        lastName: _lastNameController.text,
+        username: _usernameController.text,
+        birthday: _birthdayController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
+        countryId: int.parse(_countryController.text),
+        cityId: int.parse(_cityController.text),
+        photoUrl: _photoUrlController.text,
+        longitude: int.parse(_longitudeController.text),
+        latitude: int.parse(_latitudeController.text));
+    await ref.read(authProvider.notifier).addUser(userRegistered);
+    GoRouter.of(context).push(LoginScreen.route);
   }
 }
