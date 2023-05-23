@@ -23,8 +23,12 @@ class TournamentVenuePopulated extends Equatable {
         teams: List<String>.from(json['teams'].map((x) => x['name'])),
         sport: TournamentSport.fromJson(json['sportId']),
         mode: TournamentMode.fromJson(json['modeId']),
-        clan: TournamentClan.fromJson(json['clanId']),
-        venue: TournamentVenue.fromJson(json['venueId']),
+        clan: json['clanId'] != null
+            ? TournamentClan.fromJson(json['clanId'])
+            : null,
+        venue: json['venueId'] != null
+            ? TournamentVenue.fromJson(json['venueId'])
+            : null,
         venueName: json['venueName'],
         access: json['access'],
         status: json['status'],
