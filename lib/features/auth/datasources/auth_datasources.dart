@@ -7,6 +7,7 @@ import 'package:untorneo_mobile/core/logger/logger.dart';
 import 'package:untorneo_mobile/features/auth/gql/auth_mutations.dart';
 import 'package:untorneo_mobile/features/auth/models/auth_model.dart';
 import 'package:untorneo_mobile/features/auth/models/login_model.dart';
+import 'package:untorneo_mobile/features/auth/models/user_sign_up_model.dart';
 
 final authDatasourceProvider =
     Provider<AuthDatasource>(AuthDatasourceImpl.fromRef);
@@ -14,6 +15,7 @@ final authDatasourceProvider =
 abstract class AuthDatasource {
   Future<AuthModel> login(LoginModel loginModel);
   Future<void> saveToken(String token);
+  Future<void> addUser(UserSignUpModel newUser);
 }
 
 final class AuthDatasourceImpl implements AuthDatasource {
@@ -55,6 +57,21 @@ final class AuthDatasourceImpl implements AuthDatasource {
         DbConstants.authBox,
       );
       return;
+    } catch (e, s) {
+      Logger.logError(e.toString(), s);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> addUser(UserSignUpModel newUser) async {
+    try {
+      final options = MutationOptions(
+        document: gql(AuthMutations.addUser),
+        variables: newUser.toMap(),
+      );
+      final res = await gqlHandler.mutate(options, 'addUser');
+      Logger.log(res.toString());
     } catch (e, s) {
       Logger.logError(e.toString(), s);
       rethrow;

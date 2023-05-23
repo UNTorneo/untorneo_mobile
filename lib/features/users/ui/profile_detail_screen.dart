@@ -5,20 +5,29 @@ import 'package:untorneo_mobile/features/error/error_screen.dart';
 import 'package:untorneo_mobile/features/users/state/users_provider.dart';
 import 'package:untorneo_mobile/widgets/loading/screen_loading_widget.dart';
 
-class ProfileScreen extends ConsumerStatefulWidget {
-  const ProfileScreen({super.key, required this.userId});
+class ProfileDetailScreen extends ConsumerStatefulWidget {
+  const ProfileDetailScreen({super.key, required this.userId});
 
   final String userId;
 
-  static const route = '/profile';
-  static const routeParams = '/profile/:id';
+  static const route = '/profiles';
+  static const routeParams = '/profiles/:id';
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ProfileScreenState();
+  createState() => _ProfileDetailScreenState();
 }
 
-class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+class _ProfileDetailScreenState extends ConsumerState<ProfileDetailScreen> {
   final _formKey = GlobalKey<FormState>();
+  @override
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(usersProvider.notifier).getUser(id: int.parse(widget.userId));
+      ref.read(usersProvider.notifier);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +37,18 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       onInitial: () => const Scaffold(body: ScreenLoadingWidget()),
       onLoading: () => const Scaffold(body: ScreenLoadingWidget()),
       onData: (userDetail) => Scaffold(
-        appBar: AppBar(title: const Text('juanito2504')),
+        appBar: AppBar(title: Text(userDetail.name)),
         body: SafeArea(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Form(
               autovalidateMode: AutovalidateMode.onUserInteraction,
               key: _formKey,
-              child: const Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 20),
-                  Row(
+                  const SizedBox(height: 20),
+                  const Row(
                     children: <Widget>[
                       Expanded(
                         child: CircleAvatar(
@@ -49,50 +58,47 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Juan Contreras',
-                          style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        Text(
-                          'Clan del Usuario',
-                          style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w700,
+                          '${userDetail.name} ${userDetail.lastName}',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   SizedBox(
                     height: 40,
                     child: Row(
                       children: <Widget>[
-                        Icon(
+                        const Icon(
                           Icons.account_circle_rounded,
                           color: Colors.redAccent,
                           size: 40.0,
                         ),
-                        VerticalDivider(),
+                        const VerticalDivider(),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'Nombre de usuario',
                               style: TextStyle(
-                                fontSize: 12, fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                             Text(
-                              'juanito2504',
-                              style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w400,
+                              userDetail.username,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           ],
@@ -100,30 +106,32 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   SizedBox(
                     height: 40,
                     child: Row(
                       children: <Widget>[
-                        Icon(
+                        const Icon(
                           Icons.cake_rounded,
                           color: Colors.redAccent,
                           size: 40.0,
                         ),
-                        VerticalDivider(),
+                        const VerticalDivider(),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'Fecha de nacimiento',
                               style: TextStyle(
-                                fontSize: 12, fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                             Text(
-                              '2000-04-25',
-                              style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w400,
+                              userDetail.birthday,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           ],
@@ -131,30 +139,32 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   SizedBox(
                     height: 40,
                     child: Row(
                       children: <Widget>[
-                        Icon(
+                        const Icon(
                           Icons.mail_outline_rounded,
                           color: Colors.redAccent,
                           size: 40.0,
                         ),
-                        VerticalDivider(),
+                        const VerticalDivider(),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'Correo electrónico',
                               style: TextStyle(
-                                fontSize: 12, fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                             Text(
-                              'juan@contreras.com',
-                              style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w400,
+                              userDetail.email,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           ],
@@ -162,30 +172,32 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   SizedBox(
                     height: 40,
                     child: Row(
                       children: <Widget>[
-                        Icon(
+                        const Icon(
                           Icons.map_rounded,
                           color: Colors.redAccent,
                           size: 40.0,
                         ),
-                        VerticalDivider(),
+                        const VerticalDivider(),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'País',
                               style: TextStyle(
-                                fontSize: 12, fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                             Text(
-                              'Colombia',
-                              style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w400,
+                              userDetail.countryId.toString(),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           ],
@@ -193,30 +205,32 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   SizedBox(
                     height: 40,
                     child: Row(
                       children: <Widget>[
-                        Icon(
+                        const Icon(
                           Icons.location_city_rounded,
                           color: Colors.redAccent,
                           size: 40.0,
                         ),
-                        VerticalDivider(),
+                        const VerticalDivider(),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'Ciudad',
                               style: TextStyle(
-                                fontSize: 12, fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                             Text(
-                              'Ibagué',
-                              style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w400,
+                              userDetail.cityId.toString(),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           ],

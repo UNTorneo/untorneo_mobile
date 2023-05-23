@@ -60,7 +60,7 @@ class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
                 onError: (error) => Text(error.message),
                 onInitial: () {
                   WidgetsBinding.instance.addPostFrameCallback((_) {
-                    ref.read(usersProvider.notifier).getUser(data.leaderId);
+                    ref.read(usersProvider.notifier).getUser(id: data.leaderId);
                   });
                   return const ScreenLoadingWidget();
                 },

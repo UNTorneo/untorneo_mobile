@@ -66,4 +66,31 @@ final class UserModel extends Equatable {
 
   @override
   bool get stringify => true;
+
+  UserModel copyWith(
+    String? name,
+    String? lastName,
+    String? username,
+    String? birthday,
+    String? email,
+    int? countryId,
+    int? cityId,
+    int? latitude,
+    int? longitude,
+    String? photoUrl,
+  ){
+    return UserModel(id: id, name: name??this.name, lastName: lastName??this.lastName, username: username??this.username, birthday: birthday??this.birthday, email: email??this.email, countryId: countryId??this.countryId, cityId: cityId??this.cityId, latitude: latitude??this.latitude, longitude: longitude??this.longitude, isActive: isActive);
+  }
+
+  Map<String,dynamic> toMap(){
+    return {
+      'updateUserId':id,
+      'username':username,
+      'birthday':birthday,
+      'email':email,
+      'countryId':countryId,
+      'cityId':cityId,
+    };
+  }
+
 }

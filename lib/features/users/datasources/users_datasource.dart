@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql/client.dart';
 import 'package:untorneo_mobile/core/external/gql_handler.dart';
 import 'package:untorneo_mobile/core/logger/logger.dart';
+import 'package:untorneo_mobile/features/users/gql/users_mutations.dart';
 import 'package:untorneo_mobile/features/users/gql/users_querys.dart';
 import 'package:untorneo_mobile/features/users/models/user_model.dart';
 import 'package:untorneo_mobile/features/users/models/users_base_model.dart';
@@ -14,6 +15,9 @@ abstract class UsersDatasource {
   Future<List<UserBaseModel>>getUsers();
   Future<UserModel> getUser(
     int userId,
+  );
+  Future<void> updateUser(
+    UserModel user,
   );
 }
 
@@ -55,6 +59,21 @@ class UsersDatasourceImpl implements UsersDatasource {
       );
       final res = await gqlHandler.query(options, 'user');
       return UserModel.fromJson(res);
+    } catch (e, s) {
+      Logger.logError(e.toString(), s);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> updateUser(UserModel user,) async {
+    try {
+      final options = MutationOptions(
+        document: gql(UserMutations.updateUser),
+        variables: user.toMap(),
+      );
+      final res = await gqlHandler.mutate(options, 'updateUser');
+      Logger.log(res.toString());
     } catch (e, s) {
       Logger.logError(e.toString(), s);
       rethrow;

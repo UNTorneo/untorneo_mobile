@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untorneo_mobile/core/sealed/async_state.dart';
 import 'package:untorneo_mobile/core/sealed/either.dart';
 import 'package:untorneo_mobile/features/auth/models/login_model.dart';
+import 'package:untorneo_mobile/features/auth/models/user_sign_up_model.dart';
 import 'package:untorneo_mobile/features/auth/repositories/auth_repository.dart';
 import 'package:untorneo_mobile/features/auth/state/auth_state.dart';
 
@@ -26,4 +27,15 @@ class AuthNotifier extends StateNotifier<AuthState> {
       (r) => state.copyWith(authModel: AsyncState.success(r)),
     );
   }
+
+  Future<void> addUser(UserSignUpModel newUser,) async {
+    final result = await authRepository.addUser(newUser,);
+    result.fold(
+      (l) => (failure) => state = state.copyWith(
+            users: AsyncState.error(failure),
+          ),
+      (r) => null,
+    );
+  }
+
 }

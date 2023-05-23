@@ -12,6 +12,9 @@ abstract class UsersRepository {
   Future<Either<Failure, UserModel>> getUser(
     int userId,
   );
+  Future<Either<Failure,void>> updateUser(
+    UserModel user,
+  );
 }
 
 class UsersRepositoryImpl implements UsersRepository {
@@ -46,4 +49,15 @@ class UsersRepositoryImpl implements UsersRepository {
       return Left(Failure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> updateUser(UserModel user,) async {
+    try {
+      final res = await datasource.updateUser(user);
+      return Right(res);
+    } catch (e) {
+      return Left(Failure(e.toString()));
+    }
+  }
+
 }

@@ -7,6 +7,7 @@ final class UserSignUpModel extends Equatable {
     required this.username,
     required this.birthday,
     required this.email,
+    required this.password,
     required this.countryId,
     required this.cityId,
     required this.latitude,
@@ -21,6 +22,7 @@ final class UserSignUpModel extends Equatable {
       username: map['username'] as String,
       birthday: map['birthday'] as String,
       email: map['email'] as String,
+      password: map['password'] as String,
       countryId: map['countryId'] as int,
       cityId: map['cityId'] as int,
       latitude: map['latitude'] as int,
@@ -34,6 +36,7 @@ final class UserSignUpModel extends Equatable {
   final String username;
   final String birthday;
   final String email;
+  final String password;
   final int countryId;
   final int cityId;
   final int latitude;
@@ -48,6 +51,7 @@ final class UserSignUpModel extends Equatable {
       username,
       birthday,
       email,
+      password,
       countryId,
       cityId,
       latitude,
@@ -58,4 +62,20 @@ final class UserSignUpModel extends Equatable {
 
   @override
   bool get stringify => true;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'lastName': lastName,
+      'username': username,
+      'birthday': birthday,
+      'email': email,
+      'password': password,
+      'countryId': countryId,
+      'cityId': cityId,
+      'longitude':longitude,
+      'latitude':latitude,
+    };
+  }
+
 }

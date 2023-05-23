@@ -4,12 +4,16 @@ import 'package:untorneo_mobile/core/sealed/either.dart';
 import 'package:untorneo_mobile/features/auth/datasources/auth_datasources.dart';
 import 'package:untorneo_mobile/features/auth/models/auth_model.dart';
 import 'package:untorneo_mobile/features/auth/models/login_model.dart';
+import 'package:untorneo_mobile/features/auth/models/user_sign_up_model.dart';
 
 final authRepositoryProvider =
     Provider<AuthRepository>(AuthRepositoryImpl.fromRef);
 
 abstract class AuthRepository {
   Future<Either<Failure, AuthModel>> login(LoginModel loginModel);
+  Future<Either<Failure, void>> addUser(
+    UserSignUpModel newUser,
+  );
 }
 
 final class AuthRepositoryImpl implements AuthRepository {
@@ -30,6 +34,16 @@ final class AuthRepositoryImpl implements AuthRepository {
     try {
       final res = await authDatasource.login(loginModel);
       await authDatasource.saveToken(res.accessToken);
+      return Right(res);
+    } catch (e) {
+      return Left(Failure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> addUser(UserSignUpModel newUser,) async {
+    try {
+      final res = await authDatasource.addUser(newUser);
       return Right(res);
     } catch (e) {
       return Left(Failure(e.toString()));

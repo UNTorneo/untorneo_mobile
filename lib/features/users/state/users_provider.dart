@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untorneo_mobile/core/sealed/async_state.dart';
 import 'package:untorneo_mobile/core/sealed/either.dart';
+import 'package:untorneo_mobile/features/users/models/user_model.dart';
 import 'package:untorneo_mobile/features/users/repositories/users_repository.dart';
 import 'package:untorneo_mobile/features/users/state/users_state.dart';
 
@@ -26,7 +27,7 @@ class UsersNotifier extends StateNotifier<UsersState> {
     );
   }
 
-  Future<void> getUser(int id) async {
+  Future<void> getUser({required int id}) async {
     state = state.copyWith(user: const AsyncState.loading());
     final res = await usersRepository.getUser(id);
     res.fold(
@@ -34,4 +35,15 @@ class UsersNotifier extends StateNotifier<UsersState> {
       (r) => state = state.copyWith(user: AsyncState.success(r)),
     );
   }
+
+  Future<void> updateUser(UserModel user) async {
+    final result = await usersRepository.updateUser(user);
+    result.fold(
+      (l) => (failure) => state = state.copyWith(
+            users: AsyncState.error(failure),
+          ),
+      (r) => null,
+    );
+  }
+
 }

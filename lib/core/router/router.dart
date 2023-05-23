@@ -7,7 +7,7 @@ import 'package:untorneo_mobile/features/auth/state/auth_provider.dart';
 import 'package:untorneo_mobile/features/auth/ui/login_screen.dart';
 import 'package:untorneo_mobile/features/clans/ui/clans_screen.dart';
 import 'package:untorneo_mobile/features/users/ui/my_profile_screen.dart';
-import 'package:untorneo_mobile/features/users/ui/profile_screen.dart';
+import 'package:untorneo_mobile/features/users/ui/profile_detail_screen.dart';
 import 'package:untorneo_mobile/features/auth/ui/sign_up_screen.dart';
 import 'package:untorneo_mobile/features/clans/ui/clan_detail_screen.dart';
 import 'package:untorneo_mobile/features/error/error_screen.dart';
@@ -139,13 +139,13 @@ class CustomRouter extends Notifier<void> implements Listenable {
       builder: (context, state) => const SignUpScreen(),
     ),
     GoRoute(
-      path: ProfileScreen.routeParams,
+      path: ProfileDetailScreen.routeParams,
       builder: (context, state) {
         final id = state.pathParameters['id'];
         if (id == null) {
           return ErrorScreen(error: atributeErrorMessage('id'));
         }
-        return ProfileScreen(userId: id);
+        return ProfileDetailScreen(userId: id);
       },
     ),
     GoRoute(

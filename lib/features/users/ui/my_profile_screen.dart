@@ -41,7 +41,6 @@ class _MyProfileScreenState extends ConsumerState<MyProfileScreen> {
         ref.watch(authProvider).authModel.data!.user.countryId.toString();
     _cityController.text =
         ref.watch(authProvider).authModel.data!.user.cityId.toString();
-    final _formKey = GlobalKey<FormState>();
     final userState = ref.watch(authProvider);
     return userState.authModel.when(
       onError: (error) => ErrorScreen(error: error.message),
@@ -256,6 +255,9 @@ class _MyProfileScreenState extends ConsumerState<MyProfileScreen> {
     return true;
   }
 
-  
-
+  /*void updateUser(){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read()
+    })
+  }*/
 }

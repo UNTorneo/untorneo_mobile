@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:untorneo_mobile/core/theme/theme.dart';
 import 'package:untorneo_mobile/features/users/models/user_model.dart';
+import 'package:untorneo_mobile/features/users/ui/profile_detail_screen.dart';
 
 class UserCard extends ConsumerWidget {
   const UserCard({
@@ -26,6 +28,12 @@ class UserCard extends ConsumerWidget {
           const Divider(),
           Text(user.isActive ? 'Activo' : 'No Activo'),
           const SizedBox(height: 10),
+          FilledButton(
+            onPressed: () => GoRouter.of(context).push(
+              '${ProfileDetailScreen.route}/${user.id}',
+            ),
+            child: const Text('Ver Perfil'),
+          ),
         ],
       ),
     );
