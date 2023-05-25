@@ -1,16 +1,14 @@
-import 'dart:ffi';
-
 import 'package:equatable/equatable.dart';
 
 class UserBaseModel extends Equatable {
   const UserBaseModel({
     required this.id,
-    required this.name, 
-    required this.lastName, 
-    required this.username, 
-    required this.birthday, 
-    required this.email, 
-    required this.countryId, 
+    required this.name,
+    required this.lastName,
+    required this.username,
+    required this.birthday,
+    required this.email,
+    required this.countryId,
     required this.cityId,
     required this.latitude,
     required this.longitude,
@@ -18,21 +16,20 @@ class UserBaseModel extends Equatable {
     this.photoUrl,
   });
 
-  factory UserBaseModel.fromJson(Map<String, dynamic> json) => 
-    UserBaseModel(
-      id: json['id'],
-      name: json['name'],
-      lastName: json['lastName'],
-      username: json['birthday'],
-      birthday: DateTime.parse(json['birthday']),
-      email: json['email'],
-      countryId: json['countryId'],
-      cityId: json['cityId'],
-      latitude: json['latitude'],
-      longitude: json['longitude'],
-      isActive: json['isActive'],
-      photoUrl: json['photoUrl'],
-    );
+  factory UserBaseModel.fromJson(Map<String, dynamic> json) => UserBaseModel(
+        id: json['id'],
+        name: json['name'],
+        lastName: json['lastName'],
+        username: json['birthday'],
+        birthday: DateTime.parse(json['birthday']),
+        email: json['email'],
+        countryId: json['countryId'],
+        cityId: json['cityId'],
+        latitude: json['latitude'],
+        longitude: json['longitude'],
+        isActive: json['isActive'],
+        photoUrl: json['photoUrl'],
+      );
 
   final int id;
   final String name;
@@ -42,9 +39,9 @@ class UserBaseModel extends Equatable {
   final String email;
   final int countryId;
   final int cityId;
-  final Float latitude;
-  final Float longitude;
-  final Bool isActive;
+  final double latitude;
+  final double longitude;
+  final bool isActive;
   final String? photoUrl;
 
   @override
