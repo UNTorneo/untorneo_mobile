@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graphql/client.dart';
 import 'package:untorneo_mobile/core/constants/api_constants.dart';
+import 'package:untorneo_mobile/core/constants/db_constants.dart';
+import 'package:untorneo_mobile/core/external/db_handler.dart';
 import 'package:untorneo_mobile/core/logger/logger.dart';
 
 final graphQLProvider = Provider<GraphQLHandler>(GraphQLHandler.fromRef);
@@ -19,7 +21,15 @@ final class GraphQLHandler {
   Future<void> connect() async {
     client = GraphQLClient(
       cache: GraphQLCache(),
-      link: _httpLink,
+      link: _httpLink.concat(
+        AuthLink(
+          getToken: () async => await ref.read(dbHandlerProvider).get(
+                DbConstants.bearerTokenKey,
+                DbConstants.authBox,
+              ),
+          headerKey: 'token',
+        ),
+      ),
     );
   }
 
