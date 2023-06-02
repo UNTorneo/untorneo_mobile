@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:untorneo_mobile/features/chats/models/chats_model.dart';
 import 'package:untorneo_mobile/features/chats/widgets/chat_bubble.dart';
+import 'package:untorneo_mobile/widgets/widgets/custom_text_field.dart';
 
 class ChatScreen extends ConsumerStatefulWidget {
-
   const ChatScreen({
     super.key,
-    required this.chatId,
   });
-
-  final String chatId;
 
   static const route = '/chats_screen';
 
@@ -19,68 +17,81 @@ class ChatScreen extends ConsumerStatefulWidget {
 
 class _ChatScreen extends ConsumerState<ChatScreen> {
   final _scrollController = ScrollController();
+  final _messageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Partido'),
+      ),
+      body: Column(
         children: [
-          AppBar(
-            title: const Text('Partido'),
-            backgroundColor: Colors.deepOrange[400],
-          ),
-          Scrollbar(
-            controller: _scrollController,
-            child: ListView.builder(
-              itemCount: 1,
-              itemBuilder: (context, index) => const ChatBubble(
-                isSender: true, 
-                content: 'content', 
-                username: 'Usuario 628', 
-                sendedAt: '17:08',
+          Expanded(
+            child: Scrollbar(
+              controller: _scrollController,
+              child: ListView.builder(
+                controller: _scrollController,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                itemCount: chats.length,
+                itemBuilder: (context, index) {
+                  final chat = chats[index];
+                  return ChatBubble(
+                    isSender: chat.isMine,
+                    content: chat.content,
+                    username: chat.name,
+                    sendedAt: chat.time,
+                  );
+                },
               ),
             ),
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(right: 4),
-                decoration: BoxDecoration(
-                  color: Colors.amber[200],
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.camera_alt,
-                    size: 28,
+          SizedBox(
+            height: 40,
+            child: Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(right: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                  color: Colors.white,
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.camera_alt,
+                      size: 20,
+                    ),
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              Flexible(
-                  child: TextField(
-                textInputAction: TextInputAction.send,
-                keyboardType: TextInputType.text,
-                textCapitalization: TextCapitalization.sentences,
-                decoration: const InputDecoration(hintText: 'Envía un mensaje'),
-                onSubmitted: (value) {},
-              ),),
-              Container(
-                margin: const EdgeInsets.only(left: 4),
-                decoration: BoxDecoration(
-                  color: Colors.amber[200],
-                  borderRadius: BorderRadius.circular(0),
+                Flexible(
+                  child: CustomTextField(
+                    textInputAction: TextInputAction.send,
+                    keyboardType: TextInputType.text,
+                    label: 'Envía un mensaje',
+                    controller: _messageController,
+                  ),
                 ),
-                child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.send_rounded),
-                  color: Colors.white,
+                Container(
+                  margin: const EdgeInsets.only(left: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.send_rounded,
+                      size: 20,
+                    ),
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
+          const SizedBox(height: 10)
         ],
       ),
     );

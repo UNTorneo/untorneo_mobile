@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:untorneo_mobile/core/sealed/async_state.dart';
 import 'package:untorneo_mobile/features/auth/state/auth_provider.dart';
 import 'package:untorneo_mobile/features/auth/ui/login_screen.dart';
+import 'package:untorneo_mobile/features/chats/after_match/after_match_chats_screen.dart';
+import 'package:untorneo_mobile/features/chats/widgets/chat_screen.dart';
 import 'package:untorneo_mobile/features/clans/ui/clans_screen.dart';
 import 'package:untorneo_mobile/features/tournaments/ui/create_tournament_screen.dart';
 import 'package:untorneo_mobile/features/users/ui/my_profile_screen.dart';
@@ -50,6 +52,7 @@ class CustomRouter extends Notifier<void> implements Listenable {
         ...venueRoutes,
         ...clansRoutes,
         ...matchesRoutes,
+        ...chatsRoutes,
         GoRoute(
           path: ErrorScreen.route,
           builder: (context, state) {
@@ -99,6 +102,17 @@ class CustomRouter extends Notifier<void> implements Listenable {
         return const ClansScreen();
       },
     ),
+  ];
+
+  static final chatsRoutes = <RouteBase>[
+    GoRoute(
+      path: AfterMatchChatsHomeScreen.route,
+      builder: (context, state) => const AfterMatchChatsHomeScreen(),
+    ),
+    GoRoute(
+      path: ChatScreen.route,
+      builder: (context, state) => const ChatScreen(),
+    )
   ];
 
   static final matchesRoutes = <RouteBase>[

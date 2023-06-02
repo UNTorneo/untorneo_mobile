@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:untorneo_mobile/core/constants/image_constants.dart';
+import 'package:untorneo_mobile/features/chats/after_match/after_match_chats_screen.dart';
 import 'package:untorneo_mobile/features/clans/ui/clans_screen.dart';
 import 'package:untorneo_mobile/features/matches/ui/matches_home_screen.dart';
 import 'package:untorneo_mobile/features/tournament_venues/ui/tournament_venues_home_screen.dart';
@@ -42,6 +43,10 @@ class _IndexHomeScreenState extends ConsumerState<IndexHomeScreen> {
             icon: const Icon(Icons.notifications_none_outlined),
             onPressed: () {},
           ),
+          IconButton(
+            onPressed: () => GoRouter.of(context).push(AfterMatchChatsHomeScreen.route),
+            icon: const Icon(Icons.chat_outlined),
+          )
         ],
       ),
       bottomNavigationBar: NavigationBar(

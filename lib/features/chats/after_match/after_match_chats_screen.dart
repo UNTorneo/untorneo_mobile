@@ -55,7 +55,7 @@ class _AfterMatchChatsHomeScreen extends ConsumerState<AfterMatchChatsHomeScreen
                   Card(
                     child: ListTile(
                       onTap: () => GoRouter.of(context).push(
-                        '${ChatScreen.route}?chatId=${1}',
+                        ChatScreen.route,
                       ),
                       leading: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
