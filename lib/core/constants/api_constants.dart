@@ -1,3 +1,3 @@
 class ApiConstants {
-  static const baseUrl = 'https://api-gateway-apollo-4yiv26znhq-uc.a.run.app';
+  static const baseUrl = 'http://35.184.159.116:80';
 }
