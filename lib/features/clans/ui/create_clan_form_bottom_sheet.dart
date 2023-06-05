@@ -6,6 +6,7 @@ import 'package:untorneo_mobile/core/logger/logger.dart';
 import 'package:untorneo_mobile/core/sealed/async_state.dart';
 import 'package:untorneo_mobile/features/clans/states/clan_provider.dart';
 import 'package:untorneo_mobile/features/clans/ui/clan_detail_screen.dart';
+import 'package:untorneo_mobile/features/clans/ui/clans_screen.dart';
 import 'package:untorneo_mobile/widgets/bottom_sheet/base_bottom_sheet.dart';
 import 'package:untorneo_mobile/widgets/bottom_sheet/bottom_sheet_constants.dart';
 import 'package:untorneo_mobile/widgets/widgets/custom_text_field.dart';
@@ -88,9 +89,7 @@ class _CreateClanFormBottomSheetState
     Logger.log('*********************************************');
     try {
       if (!mounted) return;
-      GoRouter.of(context).push(
-        '${ClanDetailScreen.route}/${clanState.clans.data!.length + 1}',
-      );
+      Navigator.of(context).pop;
     } catch (e, s) {
       Logger.logError(e.toString(), s);
     }
