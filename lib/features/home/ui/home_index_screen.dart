@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:untorneo_mobile/core/constants/image_constants.dart';
 import 'package:untorneo_mobile/features/chats/after_match/after_match_chats_screen.dart';
 import 'package:untorneo_mobile/features/clans/ui/clans_screen.dart';
+import 'package:untorneo_mobile/features/interoperability/ui/post_screen.dart';
 import 'package:untorneo_mobile/features/matches/ui/matches_home_screen.dart';
 import 'package:untorneo_mobile/features/tournament_venues/ui/tournament_venues_home_screen.dart';
 import 'package:untorneo_mobile/features/tournaments/ui/tournaments_home_screen.dart';
@@ -41,7 +42,9 @@ class _IndexHomeScreenState extends ConsumerState<IndexHomeScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications_none_outlined),
-            onPressed: () {},
+            onPressed: () => GoRouter.of(context).push(
+              '${PostScreen.route}/${1}',
+            ),
           ),
           IconButton(
             onPressed: () => GoRouter.of(context).push(AfterMatchChatsHomeScreen.route),

@@ -48,7 +48,7 @@ class _ClanDetailScreen extends ConsumerState<ClanDetailScreen> {
       onLoading: () => const LoadingScreen(),
       onData: (data) {
         return Scaffold(
-          appBar: AppBar(title: const Text('Clan')),
+          appBar: AppBar(title: Text(data.name)),
           body: Column(
             children: [
               Text(

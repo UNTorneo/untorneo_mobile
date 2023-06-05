@@ -8,6 +8,7 @@ import 'package:untorneo_mobile/features/auth/ui/login_screen.dart';
 import 'package:untorneo_mobile/features/chats/after_match/after_match_chats_screen.dart';
 import 'package:untorneo_mobile/features/chats/widgets/chat_screen.dart';
 import 'package:untorneo_mobile/features/clans/ui/clans_screen.dart';
+import 'package:untorneo_mobile/features/interoperability/ui/post_screen.dart';
 import 'package:untorneo_mobile/features/tournaments/ui/create_tournament_screen.dart';
 import 'package:untorneo_mobile/features/users/ui/my_profile_screen.dart';
 import 'package:untorneo_mobile/features/users/ui/profile_detail_screen.dart';
@@ -53,6 +54,7 @@ class CustomRouter extends Notifier<void> implements Listenable {
         ...clansRoutes,
         ...matchesRoutes,
         ...chatsRoutes,
+        ...interoperabilityRoutes,
         GoRoute(
           path: ErrorScreen.route,
           builder: (context, state) {
@@ -175,6 +177,19 @@ class CustomRouter extends Notifier<void> implements Listenable {
       path: MyProfileScreen.route,
       builder: (context, state) => const MyProfileScreen(),
     ),
+  ];
+
+  static final interoperabilityRoutes = <RouteBase>[
+    GoRoute(
+      path: PostScreen.routeParams,
+      builder:(context, state) {
+        final id = state.pathParameters['id'];
+        if (id == null) {
+          return ErrorScreen(error: atributeErrorMessage('postId'));
+        }
+        return PostScreen(postId: id);
+      },
+    )
   ];
 
   static String atributeErrorMessage(String atribute) {
