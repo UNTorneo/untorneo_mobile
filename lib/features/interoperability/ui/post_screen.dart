@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:untorneo_mobile/core/sealed/async_state.dart';
+import 'package:untorneo_mobile/features/error/error_screen.dart';
+import 'package:untorneo_mobile/features/interoperability/providers/post_provider.dart';
+import 'package:untorneo_mobile/widgets/loading/screen_loading_widget.dart';
 
 class PostScreen extends ConsumerStatefulWidget {
   const PostScreen({super.key, required this.postId});
@@ -18,19 +20,19 @@ class PostScreen extends ConsumerStatefulWidget {
 class _PostScreen extends ConsumerState<PostScreen> {
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {});
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
-
+    final postState = ref.watch(postProvider);
     return Scaffold(
       appBar: AppBar(title: const Text('Post')),
       body: Padding(
         padding: const EdgeInsets.all(13.0),
-        child: Column(
+        child: postState.postConsumed.on(
+          onData: (data) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
@@ -46,12 +48,12 @@ class _PostScreen extends ConsumerState<PostScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Usuario',
+                      '${data.ownerId}',
                       style: theme.headlineLarge,
                     ), //Se trae con el ownerId
                     Text(
-                      'Publicado en: Bogotá', //location
-                      style: TextStyle(color: Colors.black38),
+                      'Publicado en: ${data.location}', //location
+                      style: const TextStyle(color: Colors.black38),
                     )
                   ],
                 ),
@@ -61,22 +63,14 @@ class _PostScreen extends ConsumerState<PostScreen> {
               height: 20,
             ),
             Text(
-              '03-04-2022',
-              textAlign: TextAlign.end,
-              style: TextStyle(color: Colors.black38),
-            ),
-            Text(
-              '(Editado: 08-04-2022)',
-              style: TextStyle(color: Colors.black38),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+              data.description,
               style: theme.bodyMedium,
             ),
           ],
+        ),
+          onError: (error) => ErrorScreen(error: error.message,),
+          onInitial: () => const ScreenLoadingWidget(),
+          onLoading: () => const ScreenLoadingWidget(),
         ),
       ),
     );
