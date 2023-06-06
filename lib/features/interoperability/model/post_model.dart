@@ -20,8 +20,8 @@ class Post extends Equatable {
     required this.description,
   });
 
-  final int postId;
-  final int ownerId;
+  final String postId;
+  final String ownerId;
   final String location;
   final String description;
 

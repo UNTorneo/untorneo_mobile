@@ -33,43 +33,53 @@ class _PostScreen extends ConsumerState<PostScreen> {
         padding: const EdgeInsets.all(13.0),
         child: postState.postConsumed.on(
           onData: (data) => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const CircleAvatar(
-                  child: Icon(Icons.person),
-                ),
-                const SizedBox(
-                  width: 25,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${data.ownerId}',
-                      style: theme.headlineLarge,
-                    ), //Se trae con el ownerId
-                    Text(
-                      'Publicado en: ${data.location}', //location
-                      style: const TextStyle(color: Colors.black38),
-                    )
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              data.description,
-              style: theme.bodyMedium,
-            ),
-          ],
-        ),
-          onError: (error) => ErrorScreen(error: error.message,),
-          onInitial: () => const ScreenLoadingWidget(),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const CircleAvatar(
+                    radius: 20,
+                    child: Icon(Icons.person),
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          data.ownerId,
+                          style: theme.headlineLarge,
+                        ), //Se trae con el ownerId
+                        Text(
+                          'Publicado en: ${data.location}', //location
+                          style: const TextStyle(color: Colors.black38),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                data.description,
+                style: theme.bodyMedium,
+              ),
+            ],
+          ),
+          onError: (error) => ErrorScreen(
+            error: error.message,
+          ),
+          onInitial: () {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              ref.read(postProvider.notifier).getConsumerPost();
+            });
+            return const ScreenLoadingWidget();
+          },
           onLoading: () => const ScreenLoadingWidget(),
         ),
       ),

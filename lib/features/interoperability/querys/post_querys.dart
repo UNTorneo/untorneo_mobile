@@ -1,6 +1,6 @@
 final class PostQuerys {
   static const getConsumerPost = r'''
-    query GetConsumerPost() {
+    query GetConsumerPost {
       getConsumerPost {
         postId
         ownerId
